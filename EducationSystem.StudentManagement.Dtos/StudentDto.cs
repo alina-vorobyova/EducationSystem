@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace EducationSystem.StudentManagement.Dtos
+{
+    public class StudentDto
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string MiddleName { get; set; }
+        public string Status { get; set; }
+        public ICollection<PhoneDto> Phones { get; set; }
+    }
+
+    public class PhoneDto
+    {
+        public string Number { get; set; }
+        public string Type { get; set; }
+    }
+}
