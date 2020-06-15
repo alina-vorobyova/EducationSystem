@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.StudentManagement.Core", "EducationSystem.StudentManagement.Core\EducationSystem.StudentManagement.Core.csproj", "{F470907D-D7E5-4DEC-8435-A14BB4CF4C64}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StudentManagement", "StudentManagement", "{926673E7-F25D-4401-B991-71E2662B41A8}"
-	ProjectSection(SolutionItems) = preProject
-		Plan.txt = Plan.txt
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.StudentManagement.Application", "EducationSystem.StudentManagement.Application\EducationSystem.StudentManagement.Application.csproj", "{EF9B8A7F-E7A4-472C-8865-D1531B17D67E}"
 EndProject
@@ -24,13 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.GroupManage
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{A21F5F6D-1E3E-4064-AAAE-D3D39B907CA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationSystem.Common.Abstractions", "EducationSystem.Common.Abstractions\EducationSystem.Common.Abstractions.csproj", "{EA1DA906-B739-49E7-8A62-CF2F5D9125FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.Common.Abstractions", "EducationSystem.Common.Abstractions\EducationSystem.Common.Abstractions.csproj", "{EA1DA906-B739-49E7-8A62-CF2F5D9125FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationSystem.Common.Utils", "EducationSystem.Common.Utils\EducationSystem.Common.Utils.csproj", "{28FD498B-E56E-4968-A6E2-5139D01B9E4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.Common.Utils", "EducationSystem.Common.Utils\EducationSystem.Common.Utils.csproj", "{28FD498B-E56E-4968-A6E2-5139D01B9E4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationSystem.Common.ApiUtils", "EducationSystem.Common.ApiUtils\EducationSystem.Common.ApiUtils.csproj", "{EA96D28C-68C4-4731-8E51-5BEF771A3E4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.Common.ApiUtils", "EducationSystem.Common.ApiUtils\EducationSystem.Common.ApiUtils.csproj", "{EA96D28C-68C4-4731-8E51-5BEF771A3E4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationSystem.Common.ValueObjects", "EducationSystem.Common.ValueObjects\EducationSystem.Common.ValueObjects.csproj", "{1C6BC1BE-3198-4675-A60D-8DAA02178C58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.Common.ValueObjects", "EducationSystem.Common.ValueObjects\EducationSystem.Common.ValueObjects.csproj", "{1C6BC1BE-3198-4675-A60D-8DAA02178C58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
