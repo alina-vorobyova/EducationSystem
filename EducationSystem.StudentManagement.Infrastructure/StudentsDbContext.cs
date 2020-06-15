@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using EducationSystem.Common.Abstractions;
 using EducationSystem.StudentManagement.Core;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace EducationSystem.StudentManagement.Infrastructure
 {
@@ -28,6 +33,24 @@ namespace EducationSystem.StudentManagement.Infrastructure
                     x.Property(y => y.Number).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("Number");
                     x.Property(y => y.Type).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("Type");
                 });
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            var aggregates = ChangeTracker.Entries<IAggregateRoot>().ToList();
+
+            foreach (var aggregate in aggregates)
+            {
+                foreach (var domainEvent in aggregate.Entity.DomainEvents)
+                {
+                    //send event using RabbitMQ
+                    var json = JsonConvert.SerializeObject(domainEvent);
+                    Console.WriteLine(json);
+                }
+                aggregate.Entity.ClearEvents();
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         public DbSet<Student> Student { get; set; }
