@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using EducationSystem.Common.Abstractions;
 using EducationSystem.StudentManagement.Core;
+using EducationSystem.StudentManagement.Core.DomainEvents;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -13,8 +15,11 @@ namespace EducationSystem.StudentManagement.Infrastructure
 {
     public class StudentsDbContext : DbContext
     {
-        public StudentsDbContext(DbContextOptions options) : base(options)
+        private readonly IPublishEndpoint _publishEndpoint;
+
+        public StudentsDbContext(DbContextOptions options, IPublishEndpoint publishEndpoint) : base(options)
         {
+            _publishEndpoint = publishEndpoint;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,7 +40,7 @@ namespace EducationSystem.StudentManagement.Infrastructure
                 });
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             var aggregates = ChangeTracker.Entries<IAggregateRoot>().ToList();
 
@@ -43,14 +48,16 @@ namespace EducationSystem.StudentManagement.Infrastructure
             {
                 foreach (var domainEvent in aggregate.Entity.DomainEvents)
                 {
+                    await _publishEndpoint.Publish(domainEvent, cancellationToken);
+
                     //send event using RabbitMQ
-                    var json = JsonConvert.SerializeObject(domainEvent);
-                    Console.WriteLine(json);
+                    //var json = JsonConvert.SerializeObject(domainEvent);
+                    //Console.WriteLine(json);
                 }
                 aggregate.Entity.ClearEvents();
             }
 
-            return base.SaveChangesAsync(cancellationToken);
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
         public DbSet<Student> Student { get; set; }

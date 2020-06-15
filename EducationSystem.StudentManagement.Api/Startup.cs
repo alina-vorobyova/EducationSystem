@@ -5,6 +5,8 @@ using AutoMapper;
 using EducationSystem.StudentManagement.Application.Queries;
 using EducationSystem.StudentManagement.Core;
 using EducationSystem.StudentManagement.Infrastructure;
+using EducationSystem.StudentManagement.Infrastructure.Extensions;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,10 +31,20 @@ namespace EducationSystem.StudentManagement.Api
         {
             services.AddControllers();
 
-            services.AddDbContextPool<StudentsDbContext>(options =>
+            services.AddTransient<StudentsDbContext>(provider =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("Default"));
+                var publishEndpoint = provider.GetService<IPublishEndpoint>();
+                var optionsBuilder = new DbContextOptionsBuilder();
+                var options = optionsBuilder.UseSqlServer(Configuration.GetConnectionString("Default")).Options;
+                return new StudentsDbContext(options, publishEndpoint);
             });
+
+            //services.AddDbContextPool<StudentsDbContext>(options =>
+            //{
+            //    options.UseSqlServer(Configuration.GetConnectionString("Default"));
+            //});
+
+            services.AddQueueServices();
 
             services.AddMediatR(typeof(GetStudentByIdQuery));
             services.AddAutoMapper(typeof(Startup));

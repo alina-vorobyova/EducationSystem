@@ -5,7 +5,7 @@ using EducationSystem.Common.Abstractions;
 
 namespace EducationSystem.StudentManagement.Core.DomainEvents
 {
-    class StudentExposedEvent : IDomainEvent
+    public class StudentExposedEvent : IDomainEvent
     {
         public int StudentId { get; }
 
