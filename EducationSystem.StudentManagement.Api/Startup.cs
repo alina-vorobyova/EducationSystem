@@ -5,7 +5,6 @@ using AutoMapper;
 using EducationSystem.StudentManagement.Application.Queries;
 using EducationSystem.StudentManagement.Core;
 using EducationSystem.StudentManagement.Infrastructure;
-using EducationSystem.StudentManagement.Infrastructure.Extensions;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -33,10 +32,11 @@ namespace EducationSystem.StudentManagement.Api
 
             services.AddTransient<StudentsDbContext>(provider =>
             {
-                var publishEndpoint = provider.GetService<IPublishEndpoint>();
-                var optionsBuilder = new DbContextOptionsBuilder();
-                var options = optionsBuilder.UseSqlServer(Configuration.GetConnectionString("Default")).Options;
-                return new StudentsDbContext(options, publishEndpoint);
+                var options = new DbContextOptionsBuilder()
+                    .UseSqlServer(Configuration.GetConnectionString("Default"))
+                    .Options;
+
+                return new StudentsDbContext(options, provider.GetService<IBus>());
             });
 
             //services.AddDbContextPool<StudentsDbContext>(options =>
@@ -44,7 +44,14 @@ namespace EducationSystem.StudentManagement.Api
             //    options.UseSqlServer(Configuration.GetConnectionString("Default"));
             //});
 
-            services.AddQueueServices();
+            var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
+            {
+                cfg.Host(new Uri("rabbitmq://localhost/"));
+            });
+
+            services.AddSingleton<IBus>(bus);
+
+            bus.Start();
 
             services.AddMediatR(typeof(GetStudentByIdQuery));
             services.AddAutoMapper(typeof(Startup));

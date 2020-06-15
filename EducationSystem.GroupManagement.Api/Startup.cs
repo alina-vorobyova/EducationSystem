@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using EducationSystem.Common.Abstractions;
+using EducationSystem.StudentManagement.Core.DomainEvents;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -22,13 +26,13 @@ namespace EducationSystem.GroupManagement.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddHostedService<MessageQueueService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -46,6 +50,44 @@ namespace EducationSystem.GroupManagement.Api
             {
                 endpoints.MapControllers();
             });
+        }
+    }
+
+    public class UpdateCustomerConsumer : IConsumer<StudentExposedEvent>
+    {
+        public Task Consume(ConsumeContext<StudentExposedEvent> context)
+        {
+            Console.WriteLine("Received!!!");
+            Console.WriteLine(context.Message.StudentId);
+            return Task.CompletedTask;
+        }
+    }
+
+    public class MessageQueueService : BackgroundService
+    {
+        private readonly IBusControl _bus;
+
+        public MessageQueueService()
+        {
+            _bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
+            {
+                cfg.Host("localhost");
+
+                cfg.ReceiveEndpoint("test_queue", e =>
+                {
+                    e.Consumer<UpdateCustomerConsumer>();
+                });
+            });
+        }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            return _bus.StartAsync();
+        }
+
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.WhenAll(base.StopAsync(cancellationToken), _bus.StopAsync());
         }
     }
 }

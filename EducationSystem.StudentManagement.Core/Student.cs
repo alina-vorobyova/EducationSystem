@@ -28,12 +28,12 @@ namespace EducationSystem.StudentManagement.Core
 
         public void Expose()
         {
-            if (Status != StudentStatus.Current)
-                throw new Exception("Can't expose not current student!");
+            //if (Status != StudentStatus.Current)
+            //    throw new Exception("Can't expose not current student!");
 
             Status = StudentStatus.Exposed;
 
-            AddDomainEvent(new StudentExposedEvent(Id));
+            AddDomainEvent(new StudentExposedEvent { StudentId = Id });
         }
 
         public void AddPhone(Phone phone)

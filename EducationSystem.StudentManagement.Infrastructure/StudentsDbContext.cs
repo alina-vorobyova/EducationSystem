@@ -15,11 +15,11 @@ namespace EducationSystem.StudentManagement.Infrastructure
 {
     public class StudentsDbContext : DbContext
     {
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
-        public StudentsDbContext(DbContextOptions options, IPublishEndpoint publishEndpoint) : base(options)
+        public StudentsDbContext(DbContextOptions options, IBus bus) : base(options)
         {
-            _publishEndpoint = publishEndpoint;
+            _bus = bus;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -48,11 +48,7 @@ namespace EducationSystem.StudentManagement.Infrastructure
             {
                 foreach (var domainEvent in aggregate.Entity.DomainEvents)
                 {
-                    await _publishEndpoint.Publish(domainEvent, cancellationToken);
-
-                    //send event using RabbitMQ
-                    //var json = JsonConvert.SerializeObject(domainEvent);
-                    //Console.WriteLine(json);
+                    await _bus.Publish(domainEvent, domainEvent.GetType(), cancellationToken);
                 }
                 aggregate.Entity.ClearEvents();
             }

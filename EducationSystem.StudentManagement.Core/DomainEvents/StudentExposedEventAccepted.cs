@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using EducationSystem.Common.Abstractions;
 
 namespace EducationSystem.StudentManagement.Core.DomainEvents
 {
-    public class StudentExposedEvent : IDomainEvent
+    public class StudentExposedEventAccepted
     {
         public int StudentId { get; set; }
     }
