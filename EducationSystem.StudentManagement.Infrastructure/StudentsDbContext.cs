@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EducationSystem.Common.Abstractions;
 using EducationSystem.StudentManagement.Core;
-using EducationSystem.StudentManagement.Core.DomainEvents;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace EducationSystem.StudentManagement.Infrastructure
 {

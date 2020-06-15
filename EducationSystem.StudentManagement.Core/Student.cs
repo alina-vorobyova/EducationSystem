@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using EducationSystem.Common.Abstractions;
+using EducationSystem.Common.Contracts;
 using EducationSystem.Common.ValueObjects;
-using EducationSystem.StudentManagement.Core.DomainEvents;
 
 namespace EducationSystem.StudentManagement.Core
 {
@@ -28,8 +27,8 @@ namespace EducationSystem.StudentManagement.Core
 
         public void Expose()
         {
-            //if (Status != StudentStatus.Current)
-            //    throw new Exception("Can't expose not current student!");
+            if (Status != StudentStatus.Current)
+                throw new Exception("Can't expose not current student!");
 
             Status = StudentStatus.Exposed;
 
