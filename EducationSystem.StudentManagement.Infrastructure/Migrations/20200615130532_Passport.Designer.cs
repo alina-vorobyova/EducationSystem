@@ -3,14 +3,16 @@ using EducationSystem.StudentManagement.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EducationSystem.StudentManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(StudentsDbContext))]
-    partial class StudentsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200615130532_Passport")]
+    partial class Passport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,25 +109,6 @@ namespace EducationSystem.StudentManagement.Infrastructure.Migrations
                             b1.HasKey("StudentId", "Id");
 
                             b1.ToTable("Phone");
-
-                            b1.WithOwner()
-                                .HasForeignKey("StudentId");
-                        });
-
-                    b.OwnsOne("EducationSystem.Common.ValueObjects.PhotoUrl", "PhotoUrl", b1 =>
-                        {
-                            b1.Property<int>("StudentId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Url")
-                                .HasColumnName("PhotoUrl")
-                                .HasColumnType("NVARCHAR(200)");
-
-                            b1.HasKey("StudentId");
-
-                            b1.ToTable("Student");
 
                             b1.WithOwner()
                                 .HasForeignKey("StudentId");
