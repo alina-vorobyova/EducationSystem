@@ -118,5 +118,13 @@ namespace EducationSystem.StudentManagement.Core
         {
             Email = Email.Empty;
         }
+
+        public void AssignToGroup()
+        {
+            if (Status != StudentStatus.Current)
+                throw new Exception("Can not assign to group not current student!");
+
+            Status = StudentStatus.Current;
+        }
     }
 }
