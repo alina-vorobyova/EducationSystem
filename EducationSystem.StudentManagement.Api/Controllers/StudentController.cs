@@ -34,9 +34,12 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Envelope<StudentDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Envelope<StudentDto>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Envelope<StudentDto>), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _mediator.Send(new GetStudentByIdQuery(id));
+            if (result.Value is null)
+                return NotFound("Student not found");
             return FromResult(result);
         }
 
@@ -83,5 +86,13 @@ namespace EducationSystem.StudentManagement.Api.Controllers
             return FromResult(result);
         }
 
+        [HttpDelete("{id}/remove")]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Remove(int id)
+        {
+            var result = await _mediator.Send(new RemoveStudentCommand(id));
+            return FromResult(result);
+        }
     }
 }

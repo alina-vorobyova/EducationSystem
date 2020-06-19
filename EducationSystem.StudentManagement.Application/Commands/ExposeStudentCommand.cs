@@ -31,9 +31,9 @@ namespace EducationSystem.StudentManagement.Application.Commands
             {
                 try
                 {
-                    var student = await _studentRepository.GetById(request.Id);
+                    var student = await _studentRepository.GetByIdAsync(request.Id);
                     student.Expose();
-                    await _studentRepository.Update(student);
+                    await _studentRepository.UpdateAsync(student);
                     return Result.Success();
                 }
                 catch (Exception ex)

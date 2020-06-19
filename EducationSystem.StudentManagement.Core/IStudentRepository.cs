@@ -7,10 +7,12 @@ namespace EducationSystem.StudentManagement.Core
 {
     public interface IStudentRepository
     {
-        Task<Student> GetById(int id);
+        Task<Student> GetByIdAsync(int id);
 
-        Task Create(Student student);
+        Task CreateAsync(Student student);
 
-        Task Update(Student student);
+        Task UpdateAsync(Student student);
+
+        Task RemoveAsync(int id);
     }
 }

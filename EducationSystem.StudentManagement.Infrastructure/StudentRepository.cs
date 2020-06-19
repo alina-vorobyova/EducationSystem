@@ -13,21 +13,31 @@ namespace EducationSystem.StudentManagement.Infrastructure
             _context = context;
         }
 
-        public async Task<Student> GetById(int id)
+        public async Task<Student> GetByIdAsync(int id)
         {
             return await _context.Student.FindAsync(id);
         }
 
-        public async Task Create(Student student)
+        public async Task CreateAsync(Student student)
         { 
             _context.Student.Add(student);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(Student student)
+        public async Task UpdateAsync(Student student)
         {
             _context.Student.Update(student);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveAsync(int id)
+        {
+           var studentToDelete = await _context.Student.FindAsync(id);
+           if(studentToDelete is null)
+               throw new Exception("Student not found!");
+
+           _context.Student.Remove(studentToDelete);
+           await _context.SaveChangesAsync();
         }
     }
 }

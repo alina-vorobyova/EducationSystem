@@ -23,7 +23,7 @@ namespace EducationSystem.StudentManagement.Infrastructure
             };
         }
 
-        public Task<Student> GetById(int id)
+        public Task<Student> GetByIdAsync(int id)
         {
             var student = _students.FirstOrDefault(x => x.Id == id);
 
@@ -33,7 +33,7 @@ namespace EducationSystem.StudentManagement.Infrastructure
             return Task.FromResult(student);
         }
 
-        public Task Create(Student student)
+        public Task CreateAsync(Student student)
         {
             //student.Id = _counter++;
             _students.Add(student);
@@ -41,12 +41,17 @@ namespace EducationSystem.StudentManagement.Infrastructure
             return Task.CompletedTask;
         }
 
-        public Task Update(Student student)
+        public Task UpdateAsync(Student student)
         {
             _students.RemoveAll(x => x.Id == student.Id);
             _students.Add(student);
 
             return Task.CompletedTask;
+        }
+
+        public Task RemoveAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

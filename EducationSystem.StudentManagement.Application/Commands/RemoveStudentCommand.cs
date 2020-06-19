@@ -9,32 +9,29 @@ using MediatR;
 
 namespace EducationSystem.StudentManagement.Application.Commands
 {
-    public class GraduateStudentCommand : IRequest<Result>
+    public class RemoveStudentCommand : IRequest<Result>
     {
         public int Id { get; set; }
 
-        public GraduateStudentCommand(int id)
+        public RemoveStudentCommand(int id)
         {
             Id = id;
         }
 
-
-        class GraduateStudentCommandHandler : IRequestHandler<GraduateStudentCommand, Result>
+        class RemoveStudentCommandHandler : IRequestHandler<RemoveStudentCommand, Result>
         {
             private readonly IStudentRepository _studentRepository;
 
-            public GraduateStudentCommandHandler(IStudentRepository studentRepository)
+            public RemoveStudentCommandHandler(IStudentRepository studentRepository)
             {
                 _studentRepository = studentRepository;
             }
 
-            public async Task<Result> Handle(GraduateStudentCommand request, CancellationToken cancellationToken)
+            public async Task<Result> Handle(RemoveStudentCommand request, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var student = await _studentRepository.GetByIdAsync(request.Id);
-                    student.Graduate();
-                    await _studentRepository.UpdateAsync(student);
+                    await _studentRepository.RemoveAsync(request.Id);
                     return Result.Success();
                 }
                 catch (Exception ex)

@@ -48,7 +48,7 @@ namespace EducationSystem.StudentManagement.Application.Commands
 
                 var student = new Student(fullName, passport, photoUrl, email);
 
-                await _studentRepository.Create(student);
+                await _studentRepository.CreateAsync(student);
 
                 return Result.Success();
             }
