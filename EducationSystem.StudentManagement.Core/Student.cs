@@ -16,6 +16,7 @@ namespace EducationSystem.StudentManagement.Core
         public Passport Passport { get; set; }
         public PhotoUrl PhotoUrl { get; set; }
         public Email Email { get; set; }
+        public int GroupId { get; private set; }
 
         protected Student() { }
 
@@ -122,10 +123,15 @@ namespace EducationSystem.StudentManagement.Core
             Email = Email.Empty;
         }
 
-        public void AssignToGroup()
+        public void AssignToGroup(int groupId)
         {
             if (Status == StudentStatus.Exposed || Status == StudentStatus.Graduated)
                 throw new Exception("Can not assign to group not current student!");
+
+            if(groupId <= 0)
+                throw new Exception("GroupId can not be less or equal 0");
+
+            GroupId = groupId;
 
             Status = StudentStatus.Current;
         }
