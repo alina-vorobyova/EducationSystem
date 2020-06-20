@@ -67,5 +67,21 @@ namespace EducationSystem.StudentManagement.Api.Controllers
             var result = await _mediator.Send(new ExposeStudentCommand(id));
             return FromResult(result);
         }
+
+
+        /// <summary>
+        /// Graduate student by Id
+        /// </summary>
+        /// <param name="id">Student Id</param>
+        /// <returns>Result</returns>
+        [HttpPost("{id}/graduate")]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Graduate(int id)
+        {
+            var result = await _mediator.Send(new GraduateStudentCommand(id));
+            return FromResult(result);
+        }
+
     }
 }
