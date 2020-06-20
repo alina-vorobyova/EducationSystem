@@ -29,7 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.Common.ApiU
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.Common.ValueObjects", "EducationSystem.Common.ValueObjects\EducationSystem.Common.ValueObjects.csproj", "{1C6BC1BE-3198-4675-A60D-8DAA02178C58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationSystem.Common.Contracts", "EducationSystem.Common.Contracts\EducationSystem.Common.Contracts.csproj", "{F23231D9-7477-46DC-969B-75BF7FE09F69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.Common.Contracts", "EducationSystem.Common.Contracts\EducationSystem.Common.Contracts.csproj", "{F23231D9-7477-46DC-969B-75BF7FE09F69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationSystem.StudentManagement.UnitTests", "EducationSystem.StudentManagement.UnitTests\EducationSystem.StudentManagement.UnitTests.csproj", "{A78B0448-5E53-4CC5-B7FC-036076FD068D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationSystem.Common.UnitTests", "EducationSystem.Common.UnitTests\EducationSystem.Common.UnitTests.csproj", "{085473F1-4435-4FFE-A281-AEBAF86C8FEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +85,14 @@ Global
 		{F23231D9-7477-46DC-969B-75BF7FE09F69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F23231D9-7477-46DC-969B-75BF7FE09F69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F23231D9-7477-46DC-969B-75BF7FE09F69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A78B0448-5E53-4CC5-B7FC-036076FD068D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A78B0448-5E53-4CC5-B7FC-036076FD068D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A78B0448-5E53-4CC5-B7FC-036076FD068D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A78B0448-5E53-4CC5-B7FC-036076FD068D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{085473F1-4435-4FFE-A281-AEBAF86C8FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{085473F1-4435-4FFE-A281-AEBAF86C8FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{085473F1-4435-4FFE-A281-AEBAF86C8FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{085473F1-4435-4FFE-A281-AEBAF86C8FEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +109,8 @@ Global
 		{EA96D28C-68C4-4731-8E51-5BEF771A3E4F} = {A21F5F6D-1E3E-4064-AAAE-D3D39B907CA3}
 		{1C6BC1BE-3198-4675-A60D-8DAA02178C58} = {A21F5F6D-1E3E-4064-AAAE-D3D39B907CA3}
 		{F23231D9-7477-46DC-969B-75BF7FE09F69} = {A21F5F6D-1E3E-4064-AAAE-D3D39B907CA3}
+		{A78B0448-5E53-4CC5-B7FC-036076FD068D} = {926673E7-F25D-4401-B991-71E2662B41A8}
+		{085473F1-4435-4FFE-A281-AEBAF86C8FEC} = {A21F5F6D-1E3E-4064-AAAE-D3D39B907CA3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A3F9FD98-00B3-4ABE-BA31-D0DF088BEC8C}
