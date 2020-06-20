@@ -30,19 +30,10 @@ namespace EducationSystem.StudentManagement.Api
         {
             services.AddControllers();
 
-            services.AddTransient<StudentsDbContext>(provider =>
+            services.AddDbContext<StudentsDbContext>(options =>
             {
-                var options = new DbContextOptionsBuilder()
-                    .UseSqlServer(Configuration.GetConnectionString("Default"))
-                    .Options;
-
-                return new StudentsDbContext(options, provider.GetService<IBus>());
+                options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
-
-            //services.AddDbContextPool<StudentsDbContext>(options =>
-            //{
-            //    options.UseSqlServer(Configuration.GetConnectionString("Default"));
-            //});
 
             var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {

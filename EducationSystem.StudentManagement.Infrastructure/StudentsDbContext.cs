@@ -12,7 +12,8 @@ namespace EducationSystem.StudentManagement.Infrastructure
     {
         private readonly IBus _bus;
 
-        public StudentsDbContext(DbContextOptions options, IBus bus) : base(options)
+        //TODO: Make DI properly
+        public StudentsDbContext(DbContextOptions options, IBus bus = null) : base(options)
         {
             _bus = bus;
         }
