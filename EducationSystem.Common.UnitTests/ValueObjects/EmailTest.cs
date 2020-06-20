@@ -13,10 +13,8 @@ namespace EducationSystem.Common.UnitTests.ValueObjects
         [InlineData("musemuse67@gmail.com")]
         public void Can_create_valid_email(string emailString)
         {
-            var email = new Email(emailString);
-            Assert.NotNull(email);
+            new Email(emailString);
         }
-
 
         [Theory]
         [InlineData("qwerty123")]

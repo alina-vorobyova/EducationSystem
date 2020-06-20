@@ -11,7 +11,7 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
     {
         [Theory]
         [InlineData("Gleb", "Skripnikov", "", "UA123456", "https://google.com/dog.jpg", "gspostmail@gmail.com")]
-        [InlineData("Alina", "Skripnikova", "Andreevna", "AZE1234567", "https://google.com/cat.jpg", "musemuse67@gmail.com")]
+        [InlineData("Alina", "Skripnikova", "Andreyevna", "AZE1234567", "https://google.com/cat.jpg", "musemuse67@gmail.com")]
         public void Can_create_a_valid_student(
             string firstName,
             string lastName,

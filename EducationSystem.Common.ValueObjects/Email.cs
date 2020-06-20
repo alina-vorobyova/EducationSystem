@@ -17,7 +17,10 @@ namespace EducationSystem.Common.ValueObjects
         {
             var regex = new Regex(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$");
 
-            if(!regex.IsMatch(emailAddress))
+            if (emailAddress is null)
+                throw new ArgumentException("Email address cannot be null");
+
+            if (!regex.IsMatch(emailAddress))
                 throw new ArgumentException("Email address is invalid");
 
             EmailAddress = emailAddress;

@@ -20,7 +20,7 @@ namespace EducationSystem.StudentManagement.Application.Queries
 
         public int Id { get; set; }
 
-        class GetStudentByIdQueryHandler : IRequestHandler<GetStudentByIdQuery, Result<StudentDto>>
+        public class GetStudentByIdQueryHandler : IRequestHandler<GetStudentByIdQuery, Result<StudentDto>>
         {
             private readonly IStudentRepository _studentRepository;
             private readonly IMapper _mapper;
