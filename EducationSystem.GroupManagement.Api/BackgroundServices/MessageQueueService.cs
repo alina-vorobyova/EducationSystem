@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using EducationSystem.GroupManagement.Api.Consumers;
 using MassTransit;
 using Microsoft.Extensions.Hosting;
 
