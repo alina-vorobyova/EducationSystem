@@ -13,4 +13,12 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EducationSystem.StudentManagement.Core\EducationSystem.StudentManagement.Core.csproj" />
+  </ItemGroup>
+
 </Project>

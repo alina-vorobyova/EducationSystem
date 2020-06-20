@@ -16,8 +16,11 @@
   <ItemGroup>
     <Folder Include="Abstractions\" />
     <Folder Include="AppUtils\" />
-    <Folder Include="ValueObjects\" />
     <Folder Include="Utils\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EducationSystem.Common.ValueObjects\EducationSystem.Common.ValueObjects.csproj" />
   </ItemGroup>
 
 </Project>
