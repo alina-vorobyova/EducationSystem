@@ -4,5 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EducationSystem.StudentManagement.Infrastructure\EducationSystem.StudentManagement.Infrastructure.csproj" />
+  </ItemGroup>
+
 
 </Project>

@@ -5,6 +5,7 @@ using AutoMapper;
 using EducationSystem.StudentManagement.Application.Queries;
 using EducationSystem.StudentManagement.Core;
 using EducationSystem.StudentManagement.Infrastructure;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,10 +30,19 @@ namespace EducationSystem.StudentManagement.Api
         {
             services.AddControllers();
 
-            services.AddDbContextPool<StudentsDbContext>(options =>
+            services.AddDbContext<StudentsDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
+
+            var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
+            {
+                cfg.Host(new Uri("rabbitmq://localhost/"));
+            });
+
+            services.AddSingleton<IBus>(bus);
+
+            bus.Start();
 
             services.AddMediatR(typeof(GetStudentByIdQuery));
             services.AddAutoMapper(typeof(Startup));

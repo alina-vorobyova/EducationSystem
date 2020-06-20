@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EducationSystem.Common.Abstractions;
+using EducationSystem.Common.Contracts;
 using EducationSystem.Common.ValueObjects;
 
 namespace EducationSystem.StudentManagement.Core
@@ -15,16 +16,17 @@ namespace EducationSystem.StudentManagement.Core
         public Passport Passport { get; set; }
         public PhotoUrl PhotoUrl { get; set; }
         public Email Email { get; set; }
+        public int GroupId { get; private set; }
 
         protected Student() { }
 
         public Student(FullName fullName, Passport passport, PhotoUrl photoUrl, Email email)
         {
             if (fullName is null)
-                throw new Exception("Can't create student without a name!");
+                throw new ArgumentException("Can't create student without a name!");
 
             if (passport is null)
-                throw new Exception("Can not create student without a passport number!");
+                throw new ArgumentException("Can not create student without a passport number!");
 
             Id = default;
             FullName = fullName;
@@ -41,6 +43,8 @@ namespace EducationSystem.StudentManagement.Core
                 throw new Exception("Can't expose not current student!");
 
             Status = StudentStatus.Exposed;
+
+            AddDomainEvent(new StudentExposedEvent { StudentId = Id });
         }
 
         public void Graduate()
@@ -119,10 +123,15 @@ namespace EducationSystem.StudentManagement.Core
             Email = Email.Empty;
         }
 
-        public void AssignToGroup()
+        public void AssignToGroup(int groupId)
         {
-            if (Status != StudentStatus.Current)
+            if (Status == StudentStatus.Exposed || Status == StudentStatus.Graduated)
                 throw new Exception("Can not assign to group not current student!");
+
+            if(groupId <= 0)
+                throw new Exception("GroupId can not be less or equal 0");
+
+            GroupId = groupId;
 
             Status = StudentStatus.Current;
         }
