@@ -23,10 +23,10 @@ namespace EducationSystem.StudentManagement.Core
         public Student(FullName fullName, Passport passport, PhotoUrl photoUrl, Email email)
         {
             if (fullName is null)
-                throw new Exception("Can't create student without a name!");
+                throw new ArgumentException("Can't create student without a name!");
 
             if (passport is null)
-                throw new Exception("Can not create student without a passport number!");
+                throw new ArgumentException("Can not create student without a passport number!");
 
             Id = default;
             FullName = fullName;
@@ -125,7 +125,7 @@ namespace EducationSystem.StudentManagement.Core
 
         public void AssignToGroup(int groupId)
         {
-            if (Status != StudentStatus.Current)
+            if (Status == StudentStatus.Exposed || Status == StudentStatus.Graduated)
                 throw new Exception("Can not assign to group not current student!");
 
             if(groupId <= 0)
