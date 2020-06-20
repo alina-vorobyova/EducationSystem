@@ -36,7 +36,17 @@ namespace EducationSystem.StudentManagement.Application.Commands
                     request.StudentDto.LastName,
                     request.StudentDto.MiddleName ?? string.Empty);
 
-                var student = new Student(fullName);
+                var passport = new Passport(request.StudentDto.Passport);
+
+                var photoUrl = PhotoUrl.Empty;
+                if (!string.IsNullOrWhiteSpace(request.StudentDto.PhotoUrl))
+                    photoUrl = new PhotoUrl(request.StudentDto.PhotoUrl);
+
+                var email = Email.Empty;
+                if(!string.IsNullOrWhiteSpace(request.StudentDto.Email))
+                    email = new Email(request.StudentDto.Email);
+
+                var student = new Student(fullName, passport, photoUrl, email);
 
                 await _studentRepository.Create(student);
 
