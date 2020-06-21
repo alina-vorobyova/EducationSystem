@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using EducationSystem.Common.ValueObjects;
 using EducationSystem.StudentManagement.Core;
 using EducationSystem.StudentManagement.Dtos;
 
-namespace EducationSystem.StudentManagement.Api.Profiles
+namespace EducationSystem.StudentManagement.Application.Profiles
 {
     public class AutoMapperProfile : Profile
     {
