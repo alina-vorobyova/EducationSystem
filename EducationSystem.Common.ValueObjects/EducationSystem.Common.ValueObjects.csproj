@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EducationSystem.Common.Abstractions\EducationSystem.Common.Abstractions.csproj" />
+    <ProjectReference Include="..\EducationSystem.Common.Utils\EducationSystem.Common.Utils.csproj" />
   </ItemGroup>
 
 </Project>

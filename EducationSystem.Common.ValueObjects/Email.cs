@@ -3,27 +3,33 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using EducationSystem.Common.Abstractions;
+using EducationSystem.Common.Utils;
 
 namespace EducationSystem.Common.ValueObjects
 {
     public class Email : ValueObject<Email>
     {
         public string EmailAddress { get; private set; }
-        public static Email Empty => new Email { EmailAddress = string.Empty };
+        public static Email Empty => new Email(string.Empty);
 
         protected Email() {}
 
-        public Email(string emailAddress)
+        protected Email(string emailAddress) : this()
+        {
+            EmailAddress = emailAddress;
+        }
+
+        public static Result<Email> Create(string emailAddress)
         {
             var regex = new Regex(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$");
 
             if (emailAddress is null)
-                throw new ArgumentException("Email address cannot be null");
+                return Result<Email>.Failure("Email address cannot be null");
 
             if (!regex.IsMatch(emailAddress))
-                throw new ArgumentException("Email address is invalid");
+                return Result<Email>.Failure("Email address is invalid");
 
-            EmailAddress = emailAddress;
+            return Result<Email>.Success(new Email(emailAddress));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

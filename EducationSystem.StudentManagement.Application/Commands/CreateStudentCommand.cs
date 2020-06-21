@@ -42,11 +42,17 @@ namespace EducationSystem.StudentManagement.Application.Commands
                 if (!string.IsNullOrWhiteSpace(request.StudentDto.PhotoUrl))
                     photoUrl = new PhotoUrl(request.StudentDto.PhotoUrl);
 
-                var email = Email.Empty;
-                if(!string.IsNullOrWhiteSpace(request.StudentDto.Email))
-                    email = new Email(request.StudentDto.Email);
+                //OLD
+                //var email = Email.Empty;
+                //if(!string.IsNullOrWhiteSpace(request.StudentDto.Email))
+                //    email = new Email(request.StudentDto.Email);
 
-                var student = new Student(fullName, passport, photoUrl, email);
+                //NEW
+                var emailResult = Email.Create(request.StudentDto.Email);
+                if (emailResult.IsFailure)
+                    return Result.Failure(emailResult.ErrorMessage);
+
+                var student = new Student(fullName, passport, photoUrl, emailResult.Value);
 
                 await _studentRepository.Create(student);
 
