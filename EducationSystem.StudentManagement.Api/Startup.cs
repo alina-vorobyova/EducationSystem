@@ -2,10 +2,12 @@ using System;
 using System.IO;
 using System.Reflection;
 using AutoMapper;
+using EducationSystem.Common.ApiUtils;
 using EducationSystem.StudentManagement.Application.Profiles;
 using EducationSystem.StudentManagement.Application.Queries;
 using EducationSystem.StudentManagement.Core;
 using EducationSystem.StudentManagement.Infrastructure;
+using EducationSystem.StudentManagement.Infrastructure.Extensions;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -31,31 +33,11 @@ namespace EducationSystem.StudentManagement.Api
         {
             services.AddControllers();
 
-            services.AddDbContext<StudentsDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("Default"));
-            });
-
-            var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
-            {
-                cfg.Host(new Uri("rabbitmq://localhost/"));
-            });
-
-            services.AddSingleton<IBus>(bus);
-
-            bus.Start();
-
+            services.AddPersistence(Configuration);
+            services.AddRabbitMqBus(Configuration);
             services.AddMediatR(typeof(GetStudentByIdQuery));
             services.AddAutoMapper(typeof(AutoMapperProfile));
-            services.AddScoped<IStudentRepository, StudentRepository>();
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "StudentManagement API", Version = "v1" });
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-            });
+            services.AddSwagger("StudentManagement API", 1);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -66,22 +48,11 @@ namespace EducationSystem.StudentManagement.Api
             }
 
             app.UseSwagger();
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
-
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }

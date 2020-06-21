@@ -43,7 +43,7 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         /// <summary>
         /// Add a new student
         /// </summary>
-        /// <param name="student">Student DTO</param>
+        /// <param name="studentDto">Student DTO</param>
         /// <returns>Student</returns>
         [HttpPost]
         [ProducesResponseType(typeof(ApiResult), StatusCodes.Status200OK)]
