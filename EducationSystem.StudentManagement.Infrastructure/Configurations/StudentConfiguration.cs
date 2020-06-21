@@ -16,7 +16,8 @@ namespace EducationSystem.StudentManagement.Infrastructure.Configurations
                 {
                     x.Property(y => y.FirstName).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("FirstName");
                     x.Property(y => y.LastName).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("LastName");
-                    x.Property(y => y.MiddleName).IsRequired(false).HasColumnType("NVARCHAR(100)").HasColumnName("MiddleName");
+                    x.Property(y => y.MiddleName).IsRequired(false).HasColumnType("NVARCHAR(100)")
+                        .HasColumnName("MiddleName");
                 })
                 .OwnsOne(x => x.Passport, x =>
                 {
@@ -24,12 +25,18 @@ namespace EducationSystem.StudentManagement.Infrastructure.Configurations
                 })
                 .OwnsOne(x => x.PhotoUrl, x =>
                 {
-                    x.Property(y => y.Url).IsRequired(false).HasColumnType("NVARCHAR(200)").HasColumnName("PhotoUrl");
+                    x.Property(y => y.Url).IsRequired(false).HasColumnType("NVARCHAR(200)")
+                        .HasColumnName("PhotoUrl");
                 })
                 .OwnsMany(x => x.Phones, x =>
                 {
                     x.Property(y => y.Number).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("Number");
                     x.Property(y => y.Type).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("Type");
+                })
+                .OwnsOne(x => x.Email, x =>
+                {
+                    x.Property(y => y.EmailAddress).IsRequired(false).HasColumnType("NVARCHAR(200)")
+                        .HasColumnName("Email");
                 });
         }
     }
