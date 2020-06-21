@@ -7,17 +7,17 @@ namespace EducationSystem.Common.ApiUtils
     {
         protected new IActionResult Ok()
         {
-            return base.Ok(Envelope.Ok());
+            return base.Ok(ApiResult.Ok());
         }
 
         protected IActionResult Ok<T>(T result)
         {
-            return base.Ok(Envelope.Ok(result));
+            return base.Ok(ApiResult.Ok(result));
         }
 
         protected IActionResult Error(string errorMessage)
         {
-            return BadRequest(Envelope.Error(errorMessage));
+            return BadRequest(ApiResult.Error(errorMessage));
         }
 
         protected IActionResult FromResult<T>(Result<T> result)

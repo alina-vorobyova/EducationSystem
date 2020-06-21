@@ -32,8 +32,8 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         /// <param name="id">Student Id</param>
         /// <returns>Student</returns>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Envelope<StudentDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Envelope<StudentDto>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResult<StudentDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResult<StudentDto>), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _mediator.Send(new GetStudentByIdQuery(id));
@@ -46,8 +46,8 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         /// <param name="student">Student DTO</param>
         /// <returns>Student</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create(NewStudentDto studentDto)
         {
             var result = await _mediator.Send(new CreateStudentCommand(studentDto));
@@ -60,8 +60,8 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         /// <param name="id">Student Id</param>
         /// <returns>Result</returns>
         [HttpPost("{id}/expose")]
-        [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Expose(int id)
         {
             var result = await _mediator.Send(new ExposeStudentCommand(id));
@@ -75,8 +75,8 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         /// <param name="id">Student Id</param>
         /// <returns>Result</returns>
         [HttpPost("{id}/graduate")]
-        [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Graduate(int id)
         {
             var result = await _mediator.Send(new GraduateStudentCommand(id));
