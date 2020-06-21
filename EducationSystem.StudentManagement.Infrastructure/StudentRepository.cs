@@ -39,5 +39,6 @@ namespace EducationSystem.StudentManagement.Infrastructure
            _context.Student.Remove(studentToDelete);
            await _context.SaveChangesAsync();
         }
+        
     }
 }

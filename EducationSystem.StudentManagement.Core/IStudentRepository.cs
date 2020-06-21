@@ -14,5 +14,6 @@ namespace EducationSystem.StudentManagement.Core
         Task UpdateAsync(Student student);
 
         Task RemoveAsync(int id);
+
     }
 }

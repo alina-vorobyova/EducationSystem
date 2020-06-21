@@ -5,6 +5,7 @@ namespace EducationSystem.StudentManagement.Dtos
 {
     public class StudentDto
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
@@ -12,6 +13,7 @@ namespace EducationSystem.StudentManagement.Dtos
         public string Passport { get; set; }
         public string PhotoUrl { get; set; }
         public string Email { get; set; }
+        public int GroupId { get; set; }
         public ICollection<PhoneDto> Phones { get; set; }
     }
 

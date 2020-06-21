@@ -51,7 +51,7 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Create(NewStudentDto studentDto)
+        public async Task<IActionResult> Register(NewStudentDto studentDto)
         {
             var result = await _mediator.Send(new CreateStudentCommand(studentDto));
             return FromResult(result);
@@ -86,12 +86,32 @@ namespace EducationSystem.StudentManagement.Api.Controllers
             return FromResult(result);
         }
 
+
+        /// <summary>
+        /// Remove student by Id
+        /// </summary>
+        /// <param name="id">Student Id</param>
+        /// <returns>Result</returns>
         [HttpDelete("{id}/remove")]
         [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Remove(int id)
         {
             var result = await _mediator.Send(new RemoveStudentCommand(id));
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// Replace student info
+        /// </summary>
+        /// <param name="studentDto">StudentDto</param>
+        /// <returns>Result</returns>
+        [HttpPut]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Replace(StudentDto studentDto)
+        {
+            var result = await _mediator.Send(new ReplaceStudentCommand(studentDto));
             return FromResult(result);
         }
     }
