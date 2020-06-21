@@ -16,7 +16,7 @@ namespace EducationSystem.StudentManagement.UnitTests.Application
 {
     public class GetStudentByIdQueryHandlerTest
     {
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public GetStudentByIdQueryHandlerTest()
         {

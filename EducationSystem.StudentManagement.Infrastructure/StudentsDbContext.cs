@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using EducationSystem.Common.Abstractions;
@@ -21,27 +22,7 @@ namespace EducationSystem.StudentManagement.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Student>()
-                .OwnsOne(x => x.FullName, x =>
-                {
-                    x.Property(y => y.FirstName).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("FirstName");
-                    x.Property(y => y.LastName).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("LastName");
-                    x.Property(y => y.MiddleName).IsRequired(false).HasColumnType("NVARCHAR(100)").HasColumnName("MiddleName");
-                })
-                .OwnsOne(x => x.Passport, x =>
-                {
-                    x.Property(y => y.Number).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("Passport");
-                })
-                .OwnsOne(x => x.PhotoUrl, x =>
-                {
-                    x.Property(y => y.Url).IsRequired(false).HasColumnType("NVARCHAR(200)").HasColumnName("PhotoUrl");
-                })
-                .OwnsMany(x => x.Phones, x =>
-                {
-                    x.Property(y => y.Number).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("Number");
-                    x.Property(y => y.Type).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("Type");
-                });
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
