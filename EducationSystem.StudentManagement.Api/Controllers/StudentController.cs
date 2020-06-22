@@ -143,5 +143,22 @@ namespace EducationSystem.StudentManagement.Api.Controllers
             var result = await _mediator.Send(new RemovePhoneCommand(removePhoneDto));
             return FromResult(result);
         }
+
+
+        /// <summary>
+        /// Edit phone for student
+        /// </summary>
+        /// <param name="editPhoneDto">EditPhoneDto</param>
+        /// <returns>Result</returns>
+        [HttpPut("{id}/editPhone")]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> EditPhone(EditPhoneDto editPhoneDto)
+        {
+            var result = await _mediator.Send(new EditPhoneCommand(editPhoneDto));
+            return FromResult(result);
+        }
+
+
     }
 }

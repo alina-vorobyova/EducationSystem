@@ -70,10 +70,10 @@ namespace EducationSystem.StudentManagement.Core
             Phones.Remove(phoneToRemove);
         }
 
-        public void ReplacePhone(Phone phoneToReplace, Phone newPhone)
+        public void ChangePhone(Phone phoneToReplace, Phone newPhone)
         {
             if(phoneToReplace is null)
-                throw new Exception("The provided phone to replace is not found!");
+                throw new Exception("The provided phone to edit is not found!");
 
             if(newPhone is null)
                 throw new Exception("A new phone must be provided!");
