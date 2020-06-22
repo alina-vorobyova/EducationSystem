@@ -8,8 +8,8 @@ namespace EducationSystem.Common.ValueObjects
 {
     public class Phone : ValueObject<Phone>
     {
-        public string Number { get; }
-        public string Type { get; }
+        public string Number { get; } = string.Empty;
+        public string Type { get; } = string.Empty;
 
         protected Phone() { }
 

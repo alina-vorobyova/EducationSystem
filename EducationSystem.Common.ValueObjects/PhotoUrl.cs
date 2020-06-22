@@ -9,9 +9,9 @@ namespace EducationSystem.Common.ValueObjects
 {
     public class PhotoUrl : ValueObject<PhotoUrl>
     {
-        public static PhotoUrl Empty => new PhotoUrl(string.Empty);
-        
-        public string Url { get; }
+        public static PhotoUrl Empty => new PhotoUrl();
+
+        public string Url { get; } = string.Empty;
 
         public static Result<PhotoUrl> Create(string url)
         {

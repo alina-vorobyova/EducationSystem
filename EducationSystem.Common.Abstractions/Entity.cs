@@ -2,7 +2,7 @@
 {
     public abstract class Entity<T>
     {
-        public T Id { get; protected set; }
+        public T Id { get; protected set; } = default!;
 
         public override bool Equals(object obj)
         {
@@ -14,7 +14,7 @@
             if (ReferenceEquals(this, other))
                 return true;
 
-            if (Id.Equals(default) || other.Id.Equals(default))
+            if (Id!.Equals(default) || other.Id!.Equals(default))
                 return false;
 
             return Id.Equals(other.Id);
@@ -38,7 +38,7 @@
 
         public override int GetHashCode()
         {
-            return Id.GetHashCode();
+            return Id!.GetHashCode();
         }
     }
 }

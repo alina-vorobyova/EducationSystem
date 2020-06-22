@@ -7,9 +7,9 @@ namespace EducationSystem.Common.ValueObjects
 {
     public class FullName : ValueObject<FullName>
     {
-        public string FirstName { get; }
-        public string LastName { get; }
-        public string MiddleName { get; }
+        public string FirstName { get; } = string.Empty;
+        public string LastName { get; } = string.Empty;
+        public string MiddleName { get; } = string.Empty;
 
         protected FullName() { }
 

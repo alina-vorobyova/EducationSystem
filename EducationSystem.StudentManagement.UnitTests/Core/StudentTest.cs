@@ -41,10 +41,10 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                new Student(null, passport, photo, email);
-                new Student(fullName, null, photo, email);
-                new Student(fullName, passport, null, email);
-                new Student(fullName, passport, photo, null);
+                new Student(null!, passport, photo, email);
+                new Student(fullName, null!, photo, email);
+                new Student(fullName, passport, null!, email);
+                new Student(fullName, passport, photo, null!);
             });
         }
 

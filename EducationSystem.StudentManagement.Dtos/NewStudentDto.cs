@@ -2,11 +2,11 @@
 {
     public class NewStudentDto
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string MiddleName { get; set; }
-        public string Passport { get; set; }
-        public string PhotoUrl { get; set; } = "";
-        public string Email { get; set; } = "";
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string MiddleName { get; set; } = string.Empty;
+        public string Passport { get; set; } = string.Empty;
+        public string PhotoUrl { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
     }
 }

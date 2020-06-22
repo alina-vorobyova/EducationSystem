@@ -9,7 +9,7 @@ namespace EducationSystem.Common.ValueObjects
 {
     public class Passport : ValueObject<Passport>
     {
-        public string Number { get; }
+        public string Number { get; } = string.Empty;
 
         protected Passport() { }
 

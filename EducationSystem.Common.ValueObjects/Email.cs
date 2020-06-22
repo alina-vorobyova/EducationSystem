@@ -9,9 +9,9 @@ namespace EducationSystem.Common.ValueObjects
 {
     public class Email : ValueObject<Email>
     {
-        public static Email Empty => new Email(string.Empty);
+        public static Email Empty => new Email();
         
-        public string EmailAddress { get; }
+        public string EmailAddress { get; } = string.Empty;
 
         protected Email() {}
 

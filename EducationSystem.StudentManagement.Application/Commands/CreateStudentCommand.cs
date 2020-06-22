@@ -35,6 +35,7 @@ namespace EducationSystem.StudentManagement.Application.Commands
                     request.StudentDto.FirstName,
                     request.StudentDto.LastName,
                     request.StudentDto.MiddleName ?? string.Empty);
+
                 var passport = new Passport(request.StudentDto.Passport);
                 var photoUrlResult = PhotoUrl.Create(request.StudentDto.PhotoUrl);
                 var emailResult = Email.Create(request.StudentDto.Email);

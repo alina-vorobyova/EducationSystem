@@ -8,7 +8,7 @@ namespace EducationSystem.Common.ValueObjects
 {
     public class GroupName : ValueObject<GroupName>
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         protected GroupName() { }
 

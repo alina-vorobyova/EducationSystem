@@ -20,7 +20,9 @@ namespace EducationSystem.StudentManagement.Core
         private readonly List<Phone> _phones = new List<Phone>();
         public IReadOnlyList<Phone> Phones => _phones;
 
-        public Student(FullName fullName, Passport passport, PhotoUrl photoUrl, Email email)
+        protected Student() {}
+
+        public Student(FullName fullName, Passport passport, PhotoUrl photoUrl, Email email) : this()
         {
             Id = default;
             FullName = fullName;

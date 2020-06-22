@@ -41,6 +41,6 @@ namespace EducationSystem.StudentManagement.Infrastructure
             return await base.SaveChangesAsync(cancellationToken);
         }
 
-        public DbSet<Student> Student { get; set; }
+        public DbSet<Student> Student { get; set; } = null!;
     }
 }

@@ -23,7 +23,7 @@ namespace EducationSystem.Common.Utils
         public static Result Success() => new Result();
         public static Result<T> Success<T>(T value) => new Result<T>(value);
         public static Result Failure(string errorMessage) => new Result(errorMessage);
-        public static Result<T> Failure<T>(string errorMessage) => new Result<T>(default, errorMessage);
+        public static Result<T> Failure<T>(string errorMessage) => new Result<T>(default!, errorMessage);
 
         public static Result Combine(params Result[] results)
         {

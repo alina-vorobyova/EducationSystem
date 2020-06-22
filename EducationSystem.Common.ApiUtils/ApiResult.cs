@@ -19,18 +19,18 @@ namespace EducationSystem.Common.ApiUtils
     public sealed class ApiResult : ApiResult<string>
     {
         private ApiResult(string errorMessage)
-            : base(null, errorMessage)
+            : base(default!, errorMessage)
         {
         }
 
         public static ApiResult<T> Ok<T>(T result)
         {
-            return new ApiResult<T>(result, null);
+            return new ApiResult<T>(result, string.Empty);
         }
 
         public static ApiResult Ok()
         {
-            return new ApiResult(null);
+            return new ApiResult(string.Empty);
         }
 
         public static ApiResult Error(string errorMessage)
