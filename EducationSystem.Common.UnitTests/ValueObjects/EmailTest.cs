@@ -24,11 +24,17 @@ namespace EducationSystem.Common.UnitTests.ValueObjects
         [InlineData("qwerty123@test")]
         [InlineData("qwerty123@test.")]
         [InlineData("@test.com")]
-        [InlineData(null)]
         public void Invalid_email_creation_returns_failure_result(string emailString)
         {
             var emailResult = Email.Create(emailString);
             emailResult.IsFailure.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Null_email_creation_throws_an_ArgumentNullException()
+        {
+            Action action = () => Email.Create(null!);
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
     }
 }
