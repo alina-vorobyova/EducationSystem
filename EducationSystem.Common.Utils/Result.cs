@@ -1,15 +1,17 @@
-﻿namespace EducationSystem.Common.Utils
+﻿using System.Text;
+
+namespace EducationSystem.Common.Utils
 {
     public class Result
     {
-        public bool IsSuccess { get; }
+        public bool IsSuccess { get; private set; }
         public bool IsFailure => !IsSuccess;
-        public string ErrorMessage { get; }
+        public string ErrorMessage { get; private set; }
 
         public Result()
         {
             IsSuccess = true;
-            ErrorMessage = null;
+            ErrorMessage = string.Empty;
         }
 
         public Result(string errorMessage)
@@ -19,8 +21,30 @@
         }
 
         public static Result Success() => new Result();
-
+        public static Result<T> Success<T>(T value) => new Result<T>(value);
         public static Result Failure(string errorMessage) => new Result(errorMessage);
+        public static Result<T> Failure<T>(string errorMessage) => new Result<T>(default, errorMessage);
+
+        public static Result Combine(params Result[] results)
+        {
+            var combinedResult = new Result();
+            var sb = new StringBuilder();
+
+            foreach (var result in results)
+            {
+                if (result.IsFailure)
+                {
+                    combinedResult.IsSuccess = false;
+                    sb.Append(result.ErrorMessage);
+                    sb.Append(' ');
+                }
+            }
+
+            if (combinedResult.IsFailure)
+                combinedResult.ErrorMessage = sb.ToString();
+
+            return combinedResult;
+        }
     }
 
     public class Result<T> : Result
@@ -28,18 +52,14 @@
 
         public T Value { get; }
 
-        private Result(T value)
+        public Result(T value)
         {
             Value = value;
         }
 
-        private Result(T value, string errorMessage) : base(errorMessage)
+        public Result(T value, string errorMessage) : base(errorMessage)
         {
             Value = value;
         }
-
-        public static Result<T> Success(T value) => new Result<T>(value);
-
-        public new static Result<T> Failure(string errorMessage) => new Result<T>(default, errorMessage);
     }
 }

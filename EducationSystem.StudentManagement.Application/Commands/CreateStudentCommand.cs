@@ -35,27 +35,16 @@ namespace EducationSystem.StudentManagement.Application.Commands
                     request.StudentDto.FirstName,
                     request.StudentDto.LastName,
                     request.StudentDto.MiddleName ?? string.Empty);
-
                 var passport = new Passport(request.StudentDto.Passport);
-
-                var photoUrl = PhotoUrl.Empty;
-                if (!string.IsNullOrWhiteSpace(request.StudentDto.PhotoUrl))
-                    photoUrl = new PhotoUrl(request.StudentDto.PhotoUrl);
-
-                //OLD
-                //var email = Email.Empty;
-                //if(!string.IsNullOrWhiteSpace(request.StudentDto.Email))
-                //    email = new Email(request.StudentDto.Email);
-
-                //NEW
+                var photoUrlResult = PhotoUrl.Create(request.StudentDto.PhotoUrl);
                 var emailResult = Email.Create(request.StudentDto.Email);
-                if (emailResult.IsFailure)
-                    return Result.Failure(emailResult.ErrorMessage);
 
-                var student = new Student(fullName, passport, photoUrl, emailResult.Value);
+                var result = Result.Combine(photoUrlResult, emailResult);
+                if (result.IsFailure)
+                    return result;
 
+                var student = new Student(fullName, passport, photoUrlResult.Value, emailResult.Value);
                 await _studentRepository.Create(student);
-
                 return Result.Success();
             }
         }

@@ -32,7 +32,6 @@ namespace EducationSystem.StudentManagement.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
             services.AddPersistence(Configuration);
             services.AddRabbitMqBus(Configuration);
             services.AddMediatR(typeof(GetStudentByIdQuery));

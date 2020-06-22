@@ -9,8 +9,9 @@ namespace EducationSystem.Common.ValueObjects
 {
     public class Email : ValueObject<Email>
     {
-        public string EmailAddress { get; private set; }
         public static Email Empty => new Email(string.Empty);
+        
+        public string EmailAddress { get; }
 
         protected Email() {}
 
@@ -24,12 +25,12 @@ namespace EducationSystem.Common.ValueObjects
             var regex = new Regex(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$");
 
             if (emailAddress is null)
-                return Result<Email>.Failure("Email address cannot be null");
+                return Result.Failure<Email>("Email address cannot be null");
 
             if (!regex.IsMatch(emailAddress))
-                return Result<Email>.Failure("Email address is invalid");
+                return Result.Failure<Email>("Email address is invalid");
 
-            return Result<Email>.Success(new Email(emailAddress));
+            return Result.Success(new Email(emailAddress));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
