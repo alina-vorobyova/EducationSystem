@@ -10,15 +10,15 @@ namespace EducationSystem.StudentManagement.Core
 {
     public class Student : AggregateRoot<int>
     {
-        public FullName FullName { get; private set; }
+        public FullName FullName { get; private set; } = null!;
+        public Passport Passport { get; private set; } = null!;
+        public PhotoUrl PhotoUrl { get; private set; } = null!;
+        public Email Email { get; private set; } = null!;
         public StudentStatus Status { get; private set; }
-        public List<Phone> Phones { get; private set; }
-        public Passport Passport { get; set; }
-        public PhotoUrl PhotoUrl { get; set; }
-        public Email Email { get; set; }
         public int GroupId { get; private set; }
 
-        protected Student() { }
+        private readonly List<Phone> _phones = new List<Phone>();
+        public IReadOnlyList<Phone> Phones => _phones;
 
         public Student(FullName fullName, Passport passport, PhotoUrl photoUrl, Email email)
         {
@@ -31,7 +31,6 @@ namespace EducationSystem.StudentManagement.Core
             Id = default;
             FullName = fullName;
             Status = StudentStatus.New;
-            Phones = new List<Phone>();
             Passport = passport;
             PhotoUrl = photoUrl;
             Email = email;
@@ -57,7 +56,7 @@ namespace EducationSystem.StudentManagement.Core
 
         public void AddPhone(Phone phone)
         {
-            Phones.Add(phone);
+            _phones.Add(phone);
         }
 
         public void RemovePhone(Phone phone)
@@ -67,7 +66,7 @@ namespace EducationSystem.StudentManagement.Core
             if (phoneToRemove is null)
                 throw new Exception("The provided phone to remove is not found!");
 
-            Phones.Remove(phoneToRemove);
+            _phones.Remove(phoneToRemove);
         }
 
         public void ReplacePhone(Phone phoneToReplace, Phone newPhone)
@@ -78,7 +77,11 @@ namespace EducationSystem.StudentManagement.Core
             if(newPhone is null)
                 throw new Exception("A new phone must be provided!");
 
-            Phones[Phones.FindIndex(x => x.Equals(phoneToReplace))] = newPhone;
+            var index = _phones.FindIndex(x => x.Equals(phoneToReplace));
+            if (index < 0)
+                throw new Exception("Phone to replace not found!");
+
+            _phones[index] = newPhone;
         }
 
         public void Rename(FullName newFullName)
