@@ -31,7 +31,7 @@ namespace EducationSystem.StudentManagement.Application.Commands
             {
                 try
                 {
-                    await _studentRepository.RemoveAsync(request.Id);
+                   await _studentRepository.RemoveAsync(request.Id);
                     return Result.Success();
                 }
                 catch (Exception ex)

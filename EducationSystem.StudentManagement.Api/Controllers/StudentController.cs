@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using EducationSystem.Common.ApiUtils;
 using EducationSystem.StudentManagement.Application.Commands;
@@ -112,6 +113,20 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         public async Task<IActionResult> Update(UpdateStudentDto updateStudentDto)
         {
             var result = await _mediator.Send(new UpdateStudentCommand(updateStudentDto));
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// Add phone to Student
+        /// </summary>
+        /// <param name="newPhoneDto">NewPhoneDto</param>
+        /// <returns>Result</returns>
+        [HttpPost("{id}/addPhone")]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddPhone(NewPhoneDto newPhoneDto)
+        {
+            var result = await _mediator.Send(new AddPhoneCommand(newPhoneDto));
             return FromResult(result);
         }
     }

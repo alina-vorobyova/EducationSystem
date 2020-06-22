@@ -33,6 +33,9 @@ namespace EducationSystem.StudentManagement.Application.Commands
                 try
                 {
                     var student = await _studentRepository.GetByIdAsync(request.Id);
+                    if(student is null)
+                        return Result.Failure("Can not Graduate Student, because Student not found");
+
                     student.Graduate();
                     await _studentRepository.UpdateAsync(student);
                     return Result.Success();

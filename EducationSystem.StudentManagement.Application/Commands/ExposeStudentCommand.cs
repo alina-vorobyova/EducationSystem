@@ -32,6 +32,10 @@ namespace EducationSystem.StudentManagement.Application.Commands
                 try
                 {
                     var student = await _studentRepository.GetByIdAsync(request.Id);
+
+                    if(student is null)
+                        return Result.Failure("Can not Expose student, because student not found");
+
                     student.Expose();
                     await _studentRepository.UpdateAsync(student);
                     return Result.Success();
