@@ -22,8 +22,8 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
         {
             var fullName = new FullName(firstName, lastName, middleName);
             var passport = new Passport(passportNumber);
-            var photo = new PhotoUrl(photoUrl);
-            var email = new Email(emailAddress);
+            var photo = PhotoUrl.Create(photoUrl).Value;
+            var email = Email.Create(emailAddress).Value;
 
             var student = new Student(fullName, passport, photo, email);
 
@@ -37,7 +37,7 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
             var fullName = new FullName("Test", "Test");
             var passport = new Passport("123123123");
             var photo = PhotoUrl.Empty;
-            var email = new Email("mail@mail.com");
+            var email = Email.Create("mail@mail.com").Value;
 
             Assert.Throws<ArgumentException>(() =>
             {
@@ -54,7 +54,7 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
             var fullName = new FullName("Test", "Test");
             var passport = new Passport("123123123");
             var photo = PhotoUrl.Empty;
-            var email = new Email("mail@mail.com");
+            var email = Email.Create("mail@mail.com").Value;
             var student = new Student(fullName, passport, photo, email);
 
             Assert.Throws<Exception>(() => student.Expose());
@@ -66,7 +66,7 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
             var fullName = new FullName("Test", "Test");
             var passport = new Passport("123123123");
             var photo = PhotoUrl.Empty;
-            var email = new Email("mail@mail.com");
+            var email = Email.Create("mail@mail.com").Value;
             var student = new Student(fullName, passport, photo, email);
 
             student.AssignToGroup(1);

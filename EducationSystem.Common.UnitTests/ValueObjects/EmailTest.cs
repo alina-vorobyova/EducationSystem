@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using EducationSystem.Common.ValueObjects;
+using FluentAssertions;
 using Xunit;
 
 namespace EducationSystem.Common.UnitTests.ValueObjects
@@ -13,7 +14,8 @@ namespace EducationSystem.Common.UnitTests.ValueObjects
         [InlineData("musemuse67@gmail.com")]
         public void Can_create_valid_email(string emailString)
         {
-            new Email(emailString);
+            var emailResult = Email.Create(emailString);
+            emailResult.IsSuccess.Should().BeTrue();
         }
 
         [Theory]
@@ -23,9 +25,10 @@ namespace EducationSystem.Common.UnitTests.ValueObjects
         [InlineData("qwerty123@test.")]
         [InlineData("@test.com")]
         [InlineData(null)]
-        public void Invalid_email_creation_throws_an_argument_exception(string emailString)
+        public void Invalid_email_creation_returns_failure_result(string emailString)
         {
-            Assert.Throws<ArgumentException>(() => new Email(emailString));
+            var emailResult = Email.Create(emailString);
+            emailResult.IsFailure.Should().BeTrue();
         }
     }
 }

@@ -37,11 +37,11 @@ namespace EducationSystem.StudentManagement.Application.Queries
                 {
                     var student = await _studentRepository.GetById(request.Id);
                     var studentDto = _mapper.Map<StudentDto>(student);
-                    return Result<StudentDto>.Success(studentDto);
+                    return Result.Success(studentDto);
                 }
                 catch (Exception ex)
                 {
-                    return Result<StudentDto>.Failure(ex.Message);
+                    return Result.Failure<StudentDto>(ex.Message);
                 }
             }
         }

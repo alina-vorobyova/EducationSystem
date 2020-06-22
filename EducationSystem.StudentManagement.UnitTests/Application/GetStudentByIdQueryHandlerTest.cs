@@ -33,7 +33,7 @@ namespace EducationSystem.StudentManagement.UnitTests.Application
                 new FullName("Test", "Test"),
                 new Passport("123123123"),
                 PhotoUrl.Empty,
-                new Email("mail@mail.com"));
+                Email.Create("mail@mail.com").Value);
         }
 
         [Fact]

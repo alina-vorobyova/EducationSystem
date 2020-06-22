@@ -35,8 +35,11 @@ namespace EducationSystem.Common.Utils
                 if (result.IsFailure)
                 {
                     combinedResult.IsSuccess = false;
+
+                    if (sb.Length > 0)
+                        sb.Append(' ');
+
                     sb.Append(result.ErrorMessage);
-                    sb.Append(' ');
                 }
             }
 
