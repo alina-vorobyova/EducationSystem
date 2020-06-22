@@ -22,12 +22,6 @@ namespace EducationSystem.StudentManagement.Core
 
         public Student(FullName fullName, Passport passport, PhotoUrl photoUrl, Email email)
         {
-            if (fullName is null)
-                throw new ArgumentException("Can't create student without a name!");
-
-            if (passport is null)
-                throw new ArgumentException("Can not create student without a passport number!");
-
             Id = default;
             FullName = fullName;
             Status = StudentStatus.New;
@@ -71,11 +65,6 @@ namespace EducationSystem.StudentManagement.Core
 
         public void ReplacePhone(Phone phoneToReplace, Phone newPhone)
         {
-            if(phoneToReplace is null)
-                throw new Exception("The provided phone to replace is not found!");
-
-            if(newPhone is null)
-                throw new Exception("A new phone must be provided!");
 
             var index = _phones.FindIndex(x => x.Equals(phoneToReplace));
             if (index < 0)
@@ -86,25 +75,16 @@ namespace EducationSystem.StudentManagement.Core
 
         public void Rename(FullName newFullName)
         {
-            if(newFullName is null)
-                throw new Exception("A new full name must be provided!");
-
             FullName = newFullName;
         }
 
         public void ChangePassport(Passport newPassport)
         {
-           if(newPassport is null)
-                throw new Exception("A new passport info must be provided!");
-
-           Passport = newPassport;
+            Passport = newPassport;
         }
 
         public void ChangePhotoUrl(PhotoUrl newPhotoUrl)
         {
-            if(newPhotoUrl is null)
-                throw new Exception("A new photo must be provided!");
-
             PhotoUrl = newPhotoUrl;
         }
 
@@ -115,9 +95,6 @@ namespace EducationSystem.StudentManagement.Core
 
         public void ChangeEmail(Email newEmail)
         {
-            if(newEmail is null)
-                throw new Exception("A new email must be provided");
-
             Email = newEmail;
         }
 
