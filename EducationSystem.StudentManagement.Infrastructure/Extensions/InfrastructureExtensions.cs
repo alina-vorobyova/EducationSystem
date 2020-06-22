@@ -12,9 +12,12 @@ namespace EducationSystem.StudentManagement.Infrastructure.Extensions
     {
         public static void AddPersistence(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<StudentsDbContext>(options =>
+            services.AddEntityFrameworkSqlServer();
+
+            services.AddDbContextPool<StudentsDbContext>((serviceProvider, options) =>
             {
                 options.UseSqlServer(config.GetConnectionString("Default"));
+                options.UseInternalServiceProvider(serviceProvider);
             });
 
             services.AddScoped<IStudentRepository, StudentRepository>();

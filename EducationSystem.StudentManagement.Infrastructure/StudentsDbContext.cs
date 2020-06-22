@@ -6,6 +6,7 @@ using EducationSystem.Common.Abstractions;
 using EducationSystem.StudentManagement.Core;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace EducationSystem.StudentManagement.Infrastructure
 {
@@ -13,10 +14,9 @@ namespace EducationSystem.StudentManagement.Infrastructure
     {
         private readonly IBus _bus;
 
-        //TODO: Make DI properly
-        public StudentsDbContext(DbContextOptions options, IBus bus = null) : base(options)
+        public StudentsDbContext(DbContextOptions options) : base(options)
         {
-            _bus = bus;
+            _bus = this.GetService<IBus>();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
