@@ -107,7 +107,7 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         /// </summary>
         /// <param name="studentDto">StudentDto</param>
         /// <returns>Result</returns>
-        [HttpPut]
+        [HttpPut("{id}/update")]
         [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Update(UpdateStudentDto updateStudentDto)
@@ -127,6 +127,20 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         public async Task<IActionResult> AddPhone(NewPhoneDto newPhoneDto)
         {
             var result = await _mediator.Send(new AddPhoneCommand(newPhoneDto));
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// Remove phone from student
+        /// </summary>
+        /// <param name="removePhoneDto">RemovePhoneDto</param>
+        /// <returns>Result</returns>
+        [HttpDelete("{id}/removePhone")]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RemovePhone(RemovePhoneDto removePhoneDto)
+        {
+            var result = await _mediator.Send(new RemovePhoneCommand(removePhoneDto));
             return FromResult(result);
         }
     }
