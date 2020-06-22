@@ -102,16 +102,16 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         }
 
         /// <summary>
-        /// Replace student info
+        /// Update student info
         /// </summary>
         /// <param name="studentDto">StudentDto</param>
         /// <returns>Result</returns>
         [HttpPut]
         [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Replace(StudentDto studentDto)
+        public async Task<IActionResult> Update(UpdateStudentDto updateStudentDto)
         {
-            var result = await _mediator.Send(new ReplaceStudentCommand(studentDto));
+            var result = await _mediator.Send(new UpdateStudentCommand(updateStudentDto));
             return FromResult(result);
         }
     }

@@ -21,8 +21,14 @@ namespace EducationSystem.Common.ValueObjects
             if (!regex.IsMatch(firstName))
                 throw new ArgumentException("First name is invalid");
 
+            if(string.IsNullOrWhiteSpace(firstName))
+                throw new ArgumentException("First name can not be empty");
+
             if (!regex.IsMatch(lastName))
                 throw new ArgumentException("Last name is invalid");
+
+            if (string.IsNullOrWhiteSpace(lastName))
+                throw new ArgumentException("Last name can not be empty");
 
             if (middleName != string.Empty && !regex.IsMatch(middleName))
                 throw new ArgumentException("Middle name is invalid");

@@ -2,6 +2,7 @@
 {
     public abstract class Entity<T>
     {
+        //TODO: need to think about public Id in Entity.cs
         public T Id { get; set; }
 
         public override bool Equals(object obj)

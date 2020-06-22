@@ -19,6 +19,7 @@ namespace EducationSystem.StudentManagement.Api.Profiles
                 .ForMember(x => x.MiddleName, x => x.MapFrom(y => y.FullName.MiddleName))
                 .ForMember(x => x.Passport, x => x.MapFrom(y => y.Passport.Number))
                 .ForMember(x => x.PhotoUrl, x => x.MapFrom(y => y.PhotoUrl.Url))
+                .ForMember(x => x.Email, x => x.MapFrom(y => y.Email.EmailAddress))
                 .ReverseMap();
 
             CreateMap<Phone, PhoneDto>()

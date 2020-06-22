@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,29 +13,31 @@ using MediatR;
 
 namespace EducationSystem.StudentManagement.Application.Commands
 {
-    public class ReplaceStudentCommand : IRequest<Result>
+    public class UpdateStudentCommand : IRequest<Result>
     {
-        public StudentDto StudentDto { get; set; }
+        public UpdateStudentDto StudentDto { get; set; }
 
-        public ReplaceStudentCommand(StudentDto studentDto)
+        public UpdateStudentCommand(UpdateStudentDto studentDto)
         {
             StudentDto = studentDto;
         }
 
-        class ReplaceStudentCommandHandler : IRequestHandler<ReplaceStudentCommand, Result>
+        class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand, Result>
         {
             private readonly IStudentRepository _studentRepository;
 
-            public ReplaceStudentCommandHandler(IStudentRepository studentRepository)
+            public UpdateStudentCommandHandler(IStudentRepository studentRepository)
             {
                 _studentRepository = studentRepository;
             }
 
-            public async Task<Result> Handle(ReplaceStudentCommand request, CancellationToken cancellationToken)
+            public async Task<Result> Handle(UpdateStudentCommand request, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var id = request.StudentDto.Id;
+                    var studentToUpdate = await _studentRepository.GetByIdAsync(request.StudentDto.Id);
+                    if(studentToUpdate is null)
+                        return Result.Failure("Student to update not found");
 
                     var fullName = new FullName(
                         request.StudentDto.FirstName,
@@ -50,11 +54,13 @@ namespace EducationSystem.StudentManagement.Application.Commands
                     if (!string.IsNullOrWhiteSpace(request.StudentDto.Email))
                         email = new Email(request.StudentDto.Email);
 
-                    var student = new Student(fullName, passport, photoUrl, email);
+                    studentToUpdate.ChangeEmail(email);
+                    studentToUpdate.ChangePassport(passport);
+                    studentToUpdate.ChangePhotoUrl(photoUrl);
+                    studentToUpdate.Rename(fullName);
 
-                    student.Id = id;
+                    await _studentRepository.UpdateAsync(studentToUpdate);
 
-                    await _studentRepository.UpdateAsync(student);
                     return Result.Success();
                 }
                 catch (Exception ex)
