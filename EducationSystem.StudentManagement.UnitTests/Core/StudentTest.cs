@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using EducationSystem.Common.ValueObjects;
 using EducationSystem.StudentManagement.Core;
+using FluentAssertions;
 using Xunit;
 
 namespace EducationSystem.StudentManagement.UnitTests.Core
@@ -25,9 +26,7 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
             var photo = PhotoUrl.Create(photoUrl).Value;
             var email = Email.Create(emailAddress).Value;
 
-            var student = new Student(fullName, passport, photo, email);
-
-            Assert.NotNull(student);
+            new Student(fullName, passport, photo, email).Should().NotBeNull();
         }
 
 
@@ -39,13 +38,15 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
             var photo = PhotoUrl.Empty;
             var email = Email.Create("mail@mail.com").Value;
 
-            Assert.Throws<ArgumentNullException>(() =>
+            Action action = () =>
             {
                 new Student(null!, passport, photo, email);
                 new Student(fullName, null!, photo, email);
                 new Student(fullName, passport, null!, email);
                 new Student(fullName, passport, photo, null!);
-            });
+            };
+
+            action.Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Fact]
@@ -57,7 +58,9 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
             var email = Email.Create("mail@mail.com").Value;
             var student = new Student(fullName, passport, photo, email);
 
-            Assert.Throws<Exception>(() => student.Expose());
+            Action action = () => student.Expose();
+
+            action.Should().Throw<Exception>();
         }
 
         [Fact]
