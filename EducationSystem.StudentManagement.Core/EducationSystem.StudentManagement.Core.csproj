@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <WeaverConfiguration>
       <Weavers>
-        <NullGuard Mode="NullableReferenceTypes" />
+        <NullGuard Mode="NullableReferenceTypes" IncludeDebugAssert="false" />
       </Weavers>
     </WeaverConfiguration>
   </PropertyGroup>

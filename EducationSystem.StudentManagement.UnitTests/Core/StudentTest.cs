@@ -39,7 +39,7 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
             var photo = PhotoUrl.Empty;
             var email = Email.Create("mail@mail.com").Value;
 
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<ArgumentNullException>(() =>
             {
                 new Student(null, passport, photo, email);
                 new Student(fullName, null, photo, email);
