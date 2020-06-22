@@ -3,7 +3,20 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
+    <WeaverConfiguration>
+      <Weavers>
+        <NullGuard Mode="NullableReferenceTypes" />
+      </Weavers>
+    </WeaverConfiguration>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fody" Version="6.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NullGuard.Fody" Version="3.0.0-beta1" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EducationSystem.Common.Contracts\EducationSystem.Common.Contracts.csproj" />
