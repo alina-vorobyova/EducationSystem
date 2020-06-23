@@ -69,7 +69,7 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
             var email = new Email("mail@mail.com");
             var student = new Student(fullName, passport, photo, email);
 
-            student.AssignToGroup();
+            student.AssignToGroup(1);
 
             student.Expose();
         }

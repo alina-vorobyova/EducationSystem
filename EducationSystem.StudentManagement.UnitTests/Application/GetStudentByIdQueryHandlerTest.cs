@@ -3,23 +3,51 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using EducationSystem.Common.ValueObjects;
+using EducationSystem.StudentManagement.Application.Profiles;
 using EducationSystem.StudentManagement.Application.Queries;
+using EducationSystem.StudentManagement.Core;
+using FluentAssertions;
+using Moq;
 using Xunit;
 
 namespace EducationSystem.StudentManagement.UnitTests.Application
 {
     public class GetStudentByIdQueryHandlerTest
     {
+        private IMapper _mapper;
+
+        public GetStudentByIdQueryHandlerTest()
+        {
+            var config = new MapperConfiguration(cnf =>
+            {
+                cnf.AddProfile(new AutoMapperProfile());
+            });
+            _mapper = config.CreateMapper();
+        }
+
+        private Student GetTestStudent()
+        {
+            return new Student(
+                new FullName("Test", "Test"),
+                new Passport("123123123"),
+                PhotoUrl.Empty,
+                new Email("mail@mail.com"));
+        }
+
         [Fact]
         public async Task Can_get_student_by_Id()
         {
-            var getStudentByIdQuery = new GetStudentByIdQuery(1);
-            var handler = new GetStudentByIdQuery.GetStudentByIdQueryHandler(null, null);
+            var query = new GetStudentByIdQuery(1);
+            var mock = new Mock<IStudentRepository>();
+            mock.Setup(x => x.GetById(query.Id)).ReturnsAsync(GetTestStudent());
+            var handler = new GetStudentByIdQuery.GetStudentByIdQueryHandler(mock.Object, _mapper);
 
-            var result = await handler.Handle(getStudentByIdQuery, CancellationToken.None);
+            var result = await handler.Handle(query, CancellationToken.None);
 
-            Assert.True(result.IsSuccess);
-            Assert.NotNull(result.Value);
+            result.IsSuccess.Should().Be(true);     //Assert.True(result.IsSuccess);
+            result.Value.Should().NotBeNull();              //Assert.NotNull(result.Value);
         }
     }
 }

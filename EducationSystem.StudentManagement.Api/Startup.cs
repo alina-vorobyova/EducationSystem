@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using AutoMapper;
+using EducationSystem.StudentManagement.Application.Profiles;
 using EducationSystem.StudentManagement.Application.Queries;
 using EducationSystem.StudentManagement.Core;
 using EducationSystem.StudentManagement.Infrastructure;
@@ -45,7 +46,7 @@ namespace EducationSystem.StudentManagement.Api
             bus.Start();
 
             services.AddMediatR(typeof(GetStudentByIdQuery));
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddScoped<IStudentRepository, StudentRepository>();
 
             services.AddSwaggerGen(c =>
