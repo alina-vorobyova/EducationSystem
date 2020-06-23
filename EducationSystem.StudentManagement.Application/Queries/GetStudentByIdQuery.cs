@@ -35,7 +35,7 @@ namespace EducationSystem.StudentManagement.Application.Queries
             {
                 try
                 {
-                    var student = await _studentRepository.GetById(request.Id);
+                    var student = await _studentRepository.GetByIdAsync(request.Id);
                     var studentDto = _mapper.Map<StudentDto>(student);
                     return Result.Success(studentDto);
                 }

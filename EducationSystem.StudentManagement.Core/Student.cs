@@ -65,9 +65,8 @@ namespace EducationSystem.StudentManagement.Core
             _phones.Remove(phoneToRemove);
         }
 
-        public void ReplacePhone(Phone phoneToReplace, Phone newPhone)
+        public void ChangePhone(Phone phoneToReplace, Phone newPhone)
         {
-
             var index = _phones.FindIndex(x => x.Equals(phoneToReplace));
             if (index < 0)
                 throw new Exception("Phone to replace not found!");
