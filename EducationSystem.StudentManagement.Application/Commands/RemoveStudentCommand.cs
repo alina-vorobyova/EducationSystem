@@ -9,35 +9,29 @@ using MediatR;
 
 namespace EducationSystem.StudentManagement.Application.Commands
 {
-    public class ExposeStudentCommand : IRequest<Result>
+    public class RemoveStudentCommand : IRequest<Result>
     {
         public int Id { get; set; }
 
-        public ExposeStudentCommand(int id)
+        public RemoveStudentCommand(int id)
         {
             Id = id;
         }
 
-        class ExposeStudentCommandHandler : IRequestHandler<ExposeStudentCommand, Result>
+        class RemoveStudentCommandHandler : IRequestHandler<RemoveStudentCommand, Result>
         {
             private readonly IStudentRepository _studentRepository;
 
-            public ExposeStudentCommandHandler(IStudentRepository studentRepository)
+            public RemoveStudentCommandHandler(IStudentRepository studentRepository)
             {
                 _studentRepository = studentRepository;
             }
 
-            public async Task<Result> Handle(ExposeStudentCommand request, CancellationToken cancellationToken)
+            public async Task<Result> Handle(RemoveStudentCommand request, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var student = await _studentRepository.GetByIdAsync(request.Id);
-
-                    if(student is null)
-                        return Result.Failure("Can not Expose student, because student not found");
-
-                    student.Expose();
-                    await _studentRepository.UpdateAsync(student);
+                   await _studentRepository.RemoveAsync(request.Id);
                     return Result.Success();
                 }
                 catch (Exception ex)

@@ -37,6 +37,10 @@ namespace EducationSystem.StudentManagement.Infrastructure
                 {
                     x.Property(y => y.Url).IsRequired(false).HasColumnType("NVARCHAR(200)").HasColumnName("PhotoUrl");
                 })
+                .OwnsOne(x => x.Email, x =>
+                {
+                    x.Property(y => y.EmailAddress).IsRequired(false).HasColumnType("NVARCHAR(200)").HasColumnName("Email");
+                })
                 .OwnsMany(x => x.Phones, x =>
                 {
                     x.Property(y => y.Number).IsRequired().HasColumnType("NVARCHAR(100)").HasColumnName("Number");
