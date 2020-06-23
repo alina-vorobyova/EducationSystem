@@ -46,8 +46,9 @@ namespace EducationSystem.StudentManagement.UnitTests.Application
 
             var result = await handler.Handle(query, CancellationToken.None);
 
-            result.IsSuccess.Should().Be(true);     //Assert.True(result.IsSuccess);
-            result.Value.Should().NotBeNull();              //Assert.NotNull(result.Value);
+            result.IsSuccess.Should().BeTrue();
+            result.Value.Should().NotBeNull();
+            result.Value.Email.Should().Be("mail@mail.com");
         }
     }
 }

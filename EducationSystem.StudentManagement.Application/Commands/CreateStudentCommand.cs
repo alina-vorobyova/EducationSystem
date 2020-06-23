@@ -34,11 +34,11 @@ namespace EducationSystem.StudentManagement.Application.Commands
                 var fullName = new FullName(
                     request.StudentDto.FirstName,
                     request.StudentDto.LastName,
-                    request.StudentDto.MiddleName ?? string.Empty);
+                    request.StudentDto.MiddleName);
 
                 var passport = new Passport(request.StudentDto.Passport);
-                var photoUrlResult = PhotoUrl.Create(request.StudentDto.PhotoUrl);
-                var emailResult = Email.Create(request.StudentDto.Email);
+                var photoUrlResult = PhotoUrl.Create(request.StudentDto.PhotoUrl ?? string.Empty);
+                var emailResult = Email.Create(request.StudentDto.Email ?? string.Empty);
 
                 var result = Result.Combine(photoUrlResult, emailResult);
                 if (result.IsFailure)
