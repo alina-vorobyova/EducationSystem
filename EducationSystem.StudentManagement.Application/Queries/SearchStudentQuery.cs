@@ -55,12 +55,12 @@ namespace EducationSystem.StudentManagement.Application.Queries
                     var result = await allStudents.ToListAsync(cancellationToken);
 
                     var studentDtoList = _mapper.Map<IEnumerable<StudentDto>>(result);
-                    return Result<IEnumerable<StudentDto>>.Success(studentDtoList);
+                    return Result.Success(studentDtoList);
 
                 }
                 catch (Exception ex)
                 {
-                    return Result<IEnumerable<StudentDto>>.Failure(ex.Message);
+                    return Result.Failure<IEnumerable<StudentDto>>(ex.Message);
                 }
             }
         }

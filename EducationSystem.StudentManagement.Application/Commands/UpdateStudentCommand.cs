@@ -15,10 +15,12 @@ namespace EducationSystem.StudentManagement.Application.Commands
 {
     public class UpdateStudentCommand : IRequest<Result>
     {
+        public int StudentId { get; set; }
         public UpdateStudentDto StudentDto { get; set; }
 
-        public UpdateStudentCommand(UpdateStudentDto studentDto)
+        public UpdateStudentCommand(int studentId, UpdateStudentDto studentDto)
         {
+            StudentId = studentId;
             StudentDto = studentDto;
         }
 
@@ -35,32 +37,29 @@ namespace EducationSystem.StudentManagement.Application.Commands
             {
                 try
                 {
-                    var studentToUpdate = await _studentRepository.GetByIdAsync(request.StudentDto.Id);
+                    var studentToUpdate = await _studentRepository.GetByIdAsync(request.StudentId);
                     if(studentToUpdate is null)
                         return Result.Failure("Student to update not found");
 
                     var fullName = new FullName(
-                        request.StudentDto.FirstName,
-                        request.StudentDto.LastName,
-                        request.StudentDto.MiddleName ?? string.Empty);
+                        request.StudentDto.FirstName ?? studentToUpdate.FullName.FirstName,
+                        request.StudentDto.LastName ?? studentToUpdate.FullName.LastName,
+                        request.StudentDto.MiddleName ?? studentToUpdate.FullName.MiddleName);
 
-                    var passport = new Passport(request.StudentDto.Passport);
+                    var passport = new Passport(request.StudentDto.Passport ?? studentToUpdate.Passport.Number);
+                    var photoUrlResult = PhotoUrl.Create(request.StudentDto.PhotoUrl ?? studentToUpdate.PhotoUrl.Url);
+                    var emailResult = Email.Create(request.StudentDto.Email ?? studentToUpdate.Email.EmailAddress);
 
-                    var photoUrl = PhotoUrl.Empty;
-                    if (!string.IsNullOrWhiteSpace(request.StudentDto.PhotoUrl))
-                        photoUrl = new PhotoUrl(request.StudentDto.PhotoUrl);
+                    var result = Result.Combine(photoUrlResult, emailResult);
+                    if (result.IsFailure)
+                        return result;
 
-                    var email = Email.Empty;
-                    if (!string.IsNullOrWhiteSpace(request.StudentDto.Email))
-                        email = new Email(request.StudentDto.Email);
-
-                    studentToUpdate.ChangeEmail(email);
-                    studentToUpdate.ChangePassport(passport);
-                    studentToUpdate.ChangePhotoUrl(photoUrl);
                     studentToUpdate.Rename(fullName);
+                    studentToUpdate.ChangePassport(passport);
+                    studentToUpdate.ChangePhotoUrl(photoUrlResult.Value);
+                    studentToUpdate.ChangeEmail(emailResult.Value);
 
                     await _studentRepository.UpdateAsync(studentToUpdate);
-
                     return Result.Success();
                 }
                 catch (Exception ex)

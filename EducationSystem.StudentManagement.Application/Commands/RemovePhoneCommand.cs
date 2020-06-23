@@ -13,10 +13,12 @@ namespace EducationSystem.StudentManagement.Application.Commands
 {
     public class RemovePhoneCommand : IRequest<Result>
     {
+        public int StudentId { get; set; }
         public RemovePhoneDto RemovePhoneDto { get; set; }
 
-        public RemovePhoneCommand(RemovePhoneDto removePhoneDto)
+        public RemovePhoneCommand(int studentId, RemovePhoneDto removePhoneDto)
         {
+            StudentId = studentId;
             RemovePhoneDto = removePhoneDto;
         }
 
@@ -33,14 +35,12 @@ namespace EducationSystem.StudentManagement.Application.Commands
             {
                 try
                 {
-                    var student = await _studentRepository.GetByIdAsync(request.RemovePhoneDto.StudentId);
+                    var student = await _studentRepository.GetByIdAsync(request.StudentId);
 
                     if(student is null)
                         return Result.Failure("Can not remove phone because student not found");
 
-                    var phoneToRemove = new Phone(request.RemovePhoneDto.Number, request.RemovePhoneDto.Type);
-
-                    student.RemovePhone(phoneToRemove);
+                    student.RemovePhone(request.RemovePhoneDto.Number);
 
                     await _studentRepository.UpdateAsync(student);
 

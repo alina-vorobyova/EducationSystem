@@ -41,7 +41,7 @@ namespace EducationSystem.StudentManagement.UnitTests.Application
         {
             var query = new GetStudentByIdQuery(1);
             var mock = new Mock<IStudentRepository>();
-            mock.Setup(x => x.GetById(query.Id)).ReturnsAsync(GetTestStudent());
+            mock.Setup(x => x.GetByIdAsync(query.Id)).ReturnsAsync(GetTestStudent());
             var handler = new GetStudentByIdQuery.GetStudentByIdQueryHandler(mock.Object, _mapper);
 
             var result = await handler.Handle(query, CancellationToken.None);

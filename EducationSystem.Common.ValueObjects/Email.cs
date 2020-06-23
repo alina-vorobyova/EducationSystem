@@ -24,8 +24,8 @@ namespace EducationSystem.Common.ValueObjects
         {
             var regex = new Regex(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$");
 
-            if (emailAddress is null)
-                return Result.Failure<Email>("Email address cannot be null");
+            if (string.IsNullOrWhiteSpace(emailAddress))
+                return Result.Success(Email.Empty);
 
             if (!regex.IsMatch(emailAddress))
                 return Result.Failure<Email>("Email address is invalid");

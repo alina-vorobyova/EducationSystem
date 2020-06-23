@@ -55,9 +55,9 @@ namespace EducationSystem.StudentManagement.Core
             _phones.Add(phone);
         }
 
-        public void RemovePhone(Phone phone)
+        public void RemovePhone(string phoneNumber)
         {
-            var phoneToRemove = Phones.FirstOrDefault(x => x == phone);
+            var phoneToRemove = Phones.FirstOrDefault(x => x.Number == phoneNumber);
 
             if (phoneToRemove is null)
                 throw new Exception("The provided phone to remove is not found!");

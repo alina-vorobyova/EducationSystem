@@ -17,6 +17,9 @@ namespace EducationSystem.Common.ValueObjects
         {
             var regex = new Regex(@"[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)");
 
+            if (string.IsNullOrWhiteSpace(url))
+                return Result.Success(PhotoUrl.Empty);
+
             if (!regex.IsMatch(url))
                 return Result.Failure<PhotoUrl>("Photo url is invalid!");
 
