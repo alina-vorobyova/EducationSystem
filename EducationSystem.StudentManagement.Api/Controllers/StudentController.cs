@@ -47,7 +47,7 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         /// <summary>
         /// Add a new student
         /// </summary>
-        /// <param name="student">Student DTO</param>
+        /// <param name="studentDto">Student DTO</param>
         /// <returns>Student</returns>
         [HttpPost]
         [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
@@ -160,5 +160,22 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         }
 
 
+        /// <summary>
+        /// Search student 
+        /// </summary>
+        /// <param name="searchStudentDto">SearchStudentDto</param>
+        /// <returns>Result</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Envelope), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Search([FromQuery] SearchStudentDto searchStudentDto)
+        {
+            var result = await _mediator.Send(new SearchStudentQuery(searchStudentDto));
+            if (result.Value is null)
+                return NotFound("Students not found");
+
+            return FromResult(result);
+        }
     }
 }

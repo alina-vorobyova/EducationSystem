@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using EducationSystem.StudentManagement.Core;
 
@@ -16,6 +17,11 @@ namespace EducationSystem.StudentManagement.Infrastructure
         public async Task<Student> GetByIdAsync(int id)
         {
             return await _context.Student.FindAsync(id);
+        }
+
+        public IQueryable<Student> GetAllStudents()
+        {
+            return  _context.Student;
         }
 
         public async Task CreateAsync(Student student)
