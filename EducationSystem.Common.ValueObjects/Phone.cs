@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using EducationSystem.Common.Abstractions;
+using EducationSystem.Common.Utils;
 
 namespace EducationSystem.Common.ValueObjects
 {
@@ -13,18 +14,23 @@ namespace EducationSystem.Common.ValueObjects
 
         protected Phone() { }
 
-        public Phone(string number, string type)
+        protected Phone(string number, string type) : this()
+        {
+            Number = number;
+            Type = type;
+        }
+
+        public static Result<Phone> Create(string number, string type)
         {
             var regex = new Regex(@"^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$");
 
             if (!regex.IsMatch(number))
-                throw new ArgumentException("Phone number is invalid");
+                return Result.Failure<Phone>("Phone number is invalid");
 
             if (string.IsNullOrWhiteSpace(type))
-                throw new ArgumentException("Phone type can't be empty");
+                return Result.Failure<Phone>("Phone type can't be empty");
 
-            Number = number;
-            Type = type;
+            return Result.Success(new Phone(number, type));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
