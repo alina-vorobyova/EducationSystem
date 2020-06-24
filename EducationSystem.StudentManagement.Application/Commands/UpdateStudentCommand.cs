@@ -41,7 +41,7 @@ namespace EducationSystem.StudentManagement.Application.Commands
                     if(studentToUpdate is null)
                         return Result.Failure("Student to update not found");
 
-                    var fullName = new FullName(
+                    var fullNameResult = FullName.Create(
                         request.StudentDto.FirstName ?? studentToUpdate.FullName.FirstName,
                         request.StudentDto.LastName ?? studentToUpdate.FullName.LastName,
                         request.StudentDto.MiddleName ?? studentToUpdate.FullName.MiddleName);
@@ -50,11 +50,11 @@ namespace EducationSystem.StudentManagement.Application.Commands
                     var photoUrlResult = PhotoUrl.Create(request.StudentDto.PhotoUrl ?? studentToUpdate.PhotoUrl.Url);
                     var emailResult = Email.Create(request.StudentDto.Email ?? studentToUpdate.Email.EmailAddress);
 
-                    var result = Result.Combine(photoUrlResult, emailResult);
+                    var result = Result.Combine(photoUrlResult, emailResult, fullNameResult);
                     if (result.IsFailure)
                         return result;
 
-                    studentToUpdate.Rename(fullName);
+                    studentToUpdate.Rename(fullNameResult.Value);
                     studentToUpdate.ChangePassport(passport);
                     studentToUpdate.ChangePhotoUrl(photoUrlResult.Value);
                     studentToUpdate.ChangeEmail(emailResult.Value);

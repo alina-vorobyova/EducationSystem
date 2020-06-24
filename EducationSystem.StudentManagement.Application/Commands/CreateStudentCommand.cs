@@ -31,7 +31,7 @@ namespace EducationSystem.StudentManagement.Application.Commands
 
             public async Task<Result> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
             {
-                var fullName = new FullName(
+                var fullNameResult = FullName.Create(
                     request.StudentDto.FirstName,
                     request.StudentDto.LastName,
                     request.StudentDto.MiddleName);
@@ -40,11 +40,11 @@ namespace EducationSystem.StudentManagement.Application.Commands
                 var photoUrlResult = PhotoUrl.Create(request.StudentDto.PhotoUrl ?? string.Empty);
                 var emailResult = Email.Create(request.StudentDto.Email ?? string.Empty);
 
-                var result = Result.Combine(photoUrlResult, emailResult);
+                var result = Result.Combine(photoUrlResult, emailResult, fullNameResult);
                 if (result.IsFailure)
                     return result;
 
-                var student = new Student(fullName, passport, photoUrlResult.Value, emailResult.Value);
+                var student = new Student(fullNameResult.Value, passport, photoUrlResult.Value, emailResult.Value);
                 await _studentRepository.CreateAsync(student);
                 return Result.Success();
             }
