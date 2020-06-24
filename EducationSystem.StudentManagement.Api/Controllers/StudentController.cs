@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using EducationSystem.Common.ApiUtils;
+using EducationSystem.Common.Utils;
 using EducationSystem.StudentManagement.Application.Commands;
 using EducationSystem.StudentManagement.Application.Queries;
 using EducationSystem.StudentManagement.Core;
@@ -40,7 +41,7 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         {
             var result = await _mediator.Send(new GetStudentByIdQuery(id));
             if (result.Value is null)
-                return NotFound("Student not found");
+                return NotFound(new ApiResult("Student not found", StatusCodes.Status404NotFound));
             return FromResult(result);
         }
 
