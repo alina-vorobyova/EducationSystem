@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using AutoMapper;
 using EducationSystem.Common.ApiUtils;
@@ -8,10 +9,13 @@ using EducationSystem.StudentManagement.Application.Queries;
 using EducationSystem.StudentManagement.Core;
 using EducationSystem.StudentManagement.Infrastructure;
 using EducationSystem.StudentManagement.Infrastructure.Extensions;
+using FluentValidation.AspNetCore;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +35,12 @@ namespace EducationSystem.StudentManagement.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(options => options.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()))
+                .ConfigureApiBehaviorOptions(options =>
+                    options.InvalidModelStateResponseFactory = actionContext => 
+                        new BadRequestObjectResult(new ApiResult(actionContext.ModelState)));
+                
             services.AddPersistence(Configuration);
             services.AddRabbitMqBus(Configuration);
             services.AddMediatR(typeof(GetStudentByIdQuery));

@@ -41,7 +41,7 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         {
             var result = await _mediator.Send(new GetStudentByIdQuery(id));
             if (result.Value is null)
-                return NotFound(new ApiResult("Student not found", StatusCodes.Status404NotFound));
+                return NotFound(new ApiResult(StatusCodes.Status404NotFound, "Student not found"));
             return FromResult(result);
         }
 

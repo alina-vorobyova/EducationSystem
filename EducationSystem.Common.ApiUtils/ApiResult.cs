@@ -1,19 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EducationSystem.Common.ApiUtils
 {
     public class ApiResult<T>
     {
         public T Result { get; }
-        public string ErrorMessage { get; }
+        public int StatusCode { get; }
         public DateTime TimeGenerated { get; }
-        public int StatusCode { get; set; }
+        public List<string> Errors { get; }
 
-        public ApiResult(T result, string errorMessage, int statusCode)
+        public ApiResult(T result, int statusCode, params string[] errors)
         {
             Result = result;
-            ErrorMessage = errorMessage;
+            Errors = errors.ToList();
             TimeGenerated = DateTime.UtcNow;
             StatusCode = statusCode;
         }
@@ -21,24 +24,36 @@ namespace EducationSystem.Common.ApiUtils
 
     public sealed class ApiResult : ApiResult<string>
     {
-        public ApiResult(string errorMessage, int statusCode)
-            : base(default!, errorMessage, statusCode)
+        public ApiResult(int statusCode, params string[] errors)
+            : base(default!, statusCode, errors)
         {
+        }
+
+        public ApiResult(ModelStateDictionary modelState) 
+            : base(default!, StatusCodes.Status400BadRequest)
+        {
+            foreach (var item in modelState)
+            {
+                foreach (var error in item.Value.Errors)
+                {
+                    Errors.Add(error.ErrorMessage);
+                }
+            }
         }
 
         public static ApiResult<T> Ok<T>(T result)
         {
-            return new ApiResult<T>(result, string.Empty, StatusCodes.Status200OK);
+            return new ApiResult<T>(result, StatusCodes.Status200OK);
         }
 
         public static ApiResult Ok()
         {
-            return new ApiResult(string.Empty, StatusCodes.Status200OK);
+            return new ApiResult(StatusCodes.Status200OK);
         }
 
-        public static ApiResult Error(string errorMessage)
+        public static ApiResult Error(params string[] errors)
         {
-            return new ApiResult(errorMessage, StatusCodes.Status400BadRequest);
+            return new ApiResult(StatusCodes.Status400BadRequest, errors);
         }
     }
 }
