@@ -46,16 +46,16 @@ namespace EducationSystem.StudentManagement.Application.Commands
                         request.StudentDto.LastName ?? studentToUpdate.FullName.LastName,
                         request.StudentDto.MiddleName ?? studentToUpdate.FullName.MiddleName);
 
-                    var passport = new Passport(request.StudentDto.Passport ?? studentToUpdate.Passport.Number);
+                    var passportResult = Passport.Create(request.StudentDto.Passport ?? studentToUpdate.Passport.Number);
                     var photoUrlResult = PhotoUrl.Create(request.StudentDto.PhotoUrl ?? studentToUpdate.PhotoUrl.Url);
                     var emailResult = Email.Create(request.StudentDto.Email ?? studentToUpdate.Email.EmailAddress);
 
-                    var result = Result.Combine(photoUrlResult, emailResult, fullNameResult);
+                    var result = Result.Combine(photoUrlResult, emailResult, fullNameResult, passportResult);
                     if (result.IsFailure)
                         return result;
 
                     studentToUpdate.Rename(fullNameResult.Value);
-                    studentToUpdate.ChangePassport(passport);
+                    studentToUpdate.ChangePassport(passportResult.Value);
                     studentToUpdate.ChangePhotoUrl(photoUrlResult.Value);
                     studentToUpdate.ChangeEmail(emailResult.Value);
 

@@ -4,6 +4,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using EducationSystem.Common.Abstractions;
+using EducationSystem.Common.Utils;
 
 namespace EducationSystem.Common.ValueObjects
 {
@@ -13,17 +14,22 @@ namespace EducationSystem.Common.ValueObjects
 
         protected Passport() { }
 
-        public Passport(string number)
+        protected Passport(string number) : this()
+        {
+           Number = number;
+        }
+
+        public static Result<Passport> Create(string number)
         {
             var regex = new Regex("^(?!^0+$)[a-zA-Z0-9]{3,20}$");
 
-            if(!regex.IsMatch(number))
-                throw new ArgumentException("Passport number is invalid!");
+            if (!regex.IsMatch(number))
+               return Result.Failure<Passport>("Passport number is invalid!");
 
-            if(string.IsNullOrWhiteSpace(number))
-                throw new ArgumentException("Passport number can not be empty!");
+            if (string.IsNullOrWhiteSpace(number))
+                return Result.Failure<Passport>("Passport number can not be empty!");
 
-            Number = number;
+            return Result.Success(new Passport(number));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
