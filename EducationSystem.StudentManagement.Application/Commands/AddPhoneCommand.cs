@@ -38,9 +38,12 @@ namespace EducationSystem.StudentManagement.Application.Commands
                     if(student is null)
                        return  Result.Failure("Can not add phone number, because Student not found");
 
-                    var phone = new Phone(request.NewPhoneDto.Number, request.NewPhoneDto.Type);
+                    var phoneResult = Phone.Create(request.NewPhoneDto.Number, request.NewPhoneDto.Type);
 
-                    student.AddPhone(phone);
+                    if(phoneResult.IsFailure)
+                        return Result.Failure(phoneResult.ErrorMessage);
+
+                    student.AddPhone(phoneResult.Value);
 
                     await _studentRepository.UpdateAsync(student);
 

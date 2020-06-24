@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using EducationSystem.Common.Abstractions;
+using EducationSystem.Common.Utils;
 
 namespace EducationSystem.Common.ValueObjects
 {
@@ -12,17 +13,22 @@ namespace EducationSystem.Common.ValueObjects
 
         protected GroupName() { }
 
-        public GroupName(string name)
+        protected GroupName(string name) : this()
+        {
+            Name = name;
+        }
+
+        public static Result<GroupName> Create(string name)
         {
             var regex = new Regex(@"^[a-zA-Z_0-9]{6,20}$");
 
             if (!regex.IsMatch(name))
-                throw new ArgumentException("Group name is invalid!");
+               return Result.Failure<GroupName>("Group name is invalid!");
 
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Group name can not be empty!");
+                return Result.Failure<GroupName>("Group name can not be empty!");
 
-            Name = name;
+            return Result.Success(new GroupName(name));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
