@@ -29,8 +29,8 @@ namespace EducationSystem.Common.ApiUtils
             {
                 cfg.Host(new Uri(host));
             });
-            bus.Start();
             services.AddSingleton<IBus>(bus);
+            bus.StartAsync();
         }
     }
 }

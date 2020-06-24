@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using EducationSystem.GroupManagement.Api.Consumers;
@@ -14,7 +15,7 @@ namespace EducationSystem.GroupManagement.Api.BackgroundServices
         {
             _bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-                cfg.Host("localhost");
+                cfg.Host(new Uri("rabbitmq://educationsystem.rabbitmq"));
 
                 cfg.ReceiveEndpoint("test_queue", e =>
                 {

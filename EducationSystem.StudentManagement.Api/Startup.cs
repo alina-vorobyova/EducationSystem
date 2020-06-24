@@ -2,8 +2,10 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using AutoMapper;
 using EducationSystem.Common.ApiUtils;
+using EducationSystem.Common.ValueObjects;
 using EducationSystem.StudentManagement.Application.Profiles;
 using EducationSystem.StudentManagement.Application.Queries;
 using EducationSystem.StudentManagement.Core;
@@ -16,6 +18,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +53,8 @@ namespace EducationSystem.StudentManagement.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            DatabaseSeed.InitializeDatabase(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

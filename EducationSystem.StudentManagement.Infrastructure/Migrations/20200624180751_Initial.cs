@@ -2,7 +2,7 @@
 
 namespace EducationSystem.StudentManagement.Infrastructure.Migrations
 {
-    public partial class Student : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,10 +15,10 @@ namespace EducationSystem.StudentManagement.Infrastructure.Migrations
                     FirstName = table.Column<string>(type: "NVARCHAR(100)", nullable: true),
                     LastName = table.Column<string>(type: "NVARCHAR(100)", nullable: true),
                     MiddleName = table.Column<string>(type: "NVARCHAR(100)", nullable: true),
-                    Status = table.Column<int>(nullable: false),
                     Passport = table.Column<string>(type: "NVARCHAR(100)", nullable: true),
                     PhotoUrl = table.Column<string>(type: "NVARCHAR(200)", nullable: true),
                     Email = table.Column<string>(type: "NVARCHAR(200)", nullable: true),
+                    Status = table.Column<int>(nullable: false),
                     GroupId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

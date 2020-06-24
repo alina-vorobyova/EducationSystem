@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using EducationSystem.Common.Utils;
 using EducationSystem.StudentManagement.Core;
@@ -16,7 +17,8 @@ namespace EducationSystem.StudentManagement.Infrastructure.Extensions
 
             services.AddDbContextPool<StudentsDbContext>((serviceProvider, options) =>
             {
-                options.UseSqlServer(config.GetConnectionString("Default"));
+                options.UseSqlServer(config.GetConnectionString("Default"), sqlServerOptions => 
+                    sqlServerOptions.EnableRetryOnFailure());
                 options.UseInternalServiceProvider(serviceProvider);
             });
 

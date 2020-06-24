@@ -35,7 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.StudentMana
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.Common.UnitTests", "EducationSystem.Common.UnitTests\EducationSystem.Common.UnitTests.csproj", "{085473F1-4435-4FFE-A281-AEBAF86C8FEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducationSystem.GroupManagement.UnitTests", "EducationSystem.GroupManagement.UnitTests\EducationSystem.GroupManagement.UnitTests.csproj", "{41A52639-83D6-4675-A4B6-89F59025B9EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EducationSystem.GroupManagement.UnitTests", "EducationSystem.GroupManagement.UnitTests\EducationSystem.GroupManagement.UnitTests.csproj", "{41A52639-83D6-4675-A4B6-89F59025B9EC}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{28436974-F1F0-4064-B719-8E2931C52A74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{41A52639-83D6-4675-A4B6-89F59025B9EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41A52639-83D6-4675-A4B6-89F59025B9EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41A52639-83D6-4675-A4B6-89F59025B9EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28436974-F1F0-4064-B719-8E2931C52A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28436974-F1F0-4064-B719-8E2931C52A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28436974-F1F0-4064-B719-8E2931C52A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28436974-F1F0-4064-B719-8E2931C52A74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
