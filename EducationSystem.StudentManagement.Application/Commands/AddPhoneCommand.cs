@@ -14,9 +14,11 @@ namespace EducationSystem.StudentManagement.Application.Commands
     public class AddPhoneCommand : IRequest<Result>
     {
         public NewPhoneDto NewPhoneDto { get; set; }
+        public int StudentId { get; set; }
 
-        public AddPhoneCommand(NewPhoneDto newPhoneDto)
+        public AddPhoneCommand(int studentId, NewPhoneDto newPhoneDto)
         {
+            StudentId = studentId;
             NewPhoneDto = newPhoneDto;
         }
 
@@ -33,7 +35,7 @@ namespace EducationSystem.StudentManagement.Application.Commands
             {
                 try
                 {
-                    var student = await _studentRepository.GetByIdAsync(request.NewPhoneDto.StudentId);
+                    var student = await _studentRepository.GetByIdAsync(request.StudentId);
 
                     if(student is null)
                        return  Result.Failure("Can not add phone number, because Student not found");

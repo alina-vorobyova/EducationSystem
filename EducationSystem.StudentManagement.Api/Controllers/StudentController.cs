@@ -126,9 +126,9 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         [HttpPost("{id}/phone")]
         [ProducesResponseType(typeof(ApiResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResult), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddPhone(NewPhoneDto newPhoneDto)
+        public async Task<IActionResult> AddPhone([FromRoute] int id, NewPhoneDto newPhoneDto)
         {
-            var result = await _mediator.Send(new AddPhoneCommand(newPhoneDto));
+            var result = await _mediator.Send(new AddPhoneCommand(id, newPhoneDto));
             return FromResult(result);
         }
 
