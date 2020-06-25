@@ -30,10 +30,10 @@ namespace EducationSystem.StudentManagement.UnitTests.Application
         private Student GetTestStudent()
         {
             return new Student(
-                new FullName("Test", "Test"),
-                new Passport("123123123"),
-                PhotoUrl.Empty,
-                Email.Create("mail@mail.com").Value);
+                 FullName.Create("Test", "Test").Value,
+                 Passport.Create("123123123").Value,
+                 PhotoUrl.Empty,
+                 Email.Create("mail@mail.com").Value);
         }
 
         [Fact]

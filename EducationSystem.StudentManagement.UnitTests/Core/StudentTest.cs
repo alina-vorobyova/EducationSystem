@@ -21,8 +21,8 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
             string photoUrl,
             string emailAddress)
         {
-            var fullName = new FullName(firstName, lastName, middleName);
-            var passport = new Passport(passportNumber);
+            var fullName = FullName.Create(firstName, lastName, middleName).Value;
+            var passport = Passport.Create(passportNumber).Value;
             var photo = PhotoUrl.Create(photoUrl).Value;
             var email = Email.Create(emailAddress).Value;
 
@@ -33,8 +33,8 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
         [Fact]
         public void Cannot_create_an_invalid_student()
         {
-            var fullName = new FullName("Test", "Test");
-            var passport = new Passport("123123123");
+            var fullName = FullName.Create("Test", "Test").Value;
+            var passport = Passport.Create("123123123").Value;
             var photo = PhotoUrl.Empty;
             var email = Email.Create("mail@mail.com").Value;
 
@@ -52,8 +52,8 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
         [Fact]
         public void Exposing_student_without_current_status_causes_an_exception()
         {
-            var fullName = new FullName("Test", "Test");
-            var passport = new Passport("123123123");
+            var fullName = FullName.Create("Test", "Test").Value;
+            var passport = Passport.Create("123123123").Value;
             var photo = PhotoUrl.Empty;
             var email = Email.Create("mail@mail.com").Value;
             var student = new Student(fullName, passport, photo, email);
@@ -66,8 +66,8 @@ namespace EducationSystem.StudentManagement.UnitTests.Core
         [Fact]
         public void Can_expose_current_student()
         {
-            var fullName = new FullName("Test", "Test");
-            var passport = new Passport("123123123");
+            var fullName = FullName.Create("Test", "Test").Value;
+            var passport = Passport.Create("123123123").Value;
             var photo = PhotoUrl.Empty;
             var email = Email.Create("mail@mail.com").Value;
             var student = new Student(fullName, passport, photo, email);
