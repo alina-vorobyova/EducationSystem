@@ -6,7 +6,6 @@ namespace EducationSystem.StudentManagement.Dtos
 {
     public class EditPhoneDto 
     {
-        public int StudentId { get; set; }
         public string OldNumber { get; set; }
         public string NewNumber { get; set; }
         public string OldType { get; set; }
