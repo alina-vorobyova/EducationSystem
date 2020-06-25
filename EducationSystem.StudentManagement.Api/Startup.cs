@@ -12,9 +12,11 @@ using EducationSystem.StudentManagement.Core;
 using EducationSystem.StudentManagement.Infrastructure;
 using EducationSystem.StudentManagement.Infrastructure.Extensions;
 using FluentValidation.AspNetCore;
+using HealthChecks.UI.Client;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +45,15 @@ namespace EducationSystem.StudentManagement.Api
                 .ConfigureApiBehaviorOptions(options =>
                     options.InvalidModelStateResponseFactory = actionContext => 
                         new BadRequestObjectResult(new ApiResult(actionContext.ModelState)));
-                
+
+            services.AddHealthChecks()
+                .AddDbContextCheck<StudentsDbContext>()
+                .AddRabbitMQ(new Uri(Configuration["RabbitMQ:ConnectionString"]));
+
+            services
+                .AddHealthChecksUI()
+                .AddInMemoryStorage();
+
             services.AddPersistence(Configuration);
             services.AddRabbitMqBus(Configuration);
             services.AddMediatR(typeof(GetStudentByIdQuery));
@@ -62,10 +72,19 @@ namespace EducationSystem.StudentManagement.Api
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecksUI();
+            });
         }
     }
 }
