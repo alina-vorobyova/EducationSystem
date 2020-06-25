@@ -175,9 +175,6 @@ namespace EducationSystem.StudentManagement.Api.Controllers
         public async Task<IActionResult> Search([FromQuery] SearchStudentDto searchStudentDto)
         {
             var result = await _mediator.Send(new SearchStudentQuery(searchStudentDto));
-            if (result.Value is null)
-                return NotFound("Students not found");
-
             return FromResult(result);
         }
     }
