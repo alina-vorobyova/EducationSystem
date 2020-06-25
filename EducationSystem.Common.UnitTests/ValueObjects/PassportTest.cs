@@ -14,8 +14,8 @@ namespace EducationSystem.Common.UnitTests.ValueObjects
         [InlineData("uk777777")]
         public void Can_create_valid_passport(string number)
         {
-            var fullName = Passport.Create(number);
-            fullName.IsSuccess.Should().BeTrue();
+            var passportResult = Passport.Create(number);
+            passportResult.IsSuccess.Should().BeTrue();
         }
 
 
