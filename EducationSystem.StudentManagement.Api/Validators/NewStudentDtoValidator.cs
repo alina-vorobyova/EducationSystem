@@ -19,9 +19,8 @@ namespace EducationSystem.StudentManagement.Api.Validators
                 .Must(Validation.IsValidName);
 
             RuleFor(x => x.MiddleName)
-                .NotEmpty()
                 .MaximumLength(100)
-                .Must(Validation.IsValidName);
+                .Must(Validation.IsValidName).When(x => x.MiddleName != null);
 
             RuleFor(x => x.Passport)
                 .NotEmpty()
@@ -30,11 +29,11 @@ namespace EducationSystem.StudentManagement.Api.Validators
 
             RuleFor(x => x.PhotoUrl)
                 .MaximumLength(200)
-                .Must(Validation.IsValidUrl);
+                .Must(Validation.IsValidUrl).When(x => x.PhotoUrl != null);
 
             RuleFor(x => x.Email)
                 .MaximumLength(200)
-                .EmailAddress();
+                .EmailAddress().When(x => x.Email != null);
         }
     }
 }
