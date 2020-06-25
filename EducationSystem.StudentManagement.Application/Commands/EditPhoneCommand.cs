@@ -37,10 +37,14 @@ namespace EducationSystem.StudentManagement.Application.Commands
                     if(student is null)
                         return Result.Failure("Can not edit phone, because student not found");
 
-                    var oldPhone = new Phone(request.EditPhoneDto.OldNumber, request.EditPhoneDto.OldType);
-                    var newPhone = new Phone(request.EditPhoneDto.NewNumber, request.EditPhoneDto.NewType);
+                    var oldPhoneResult = Phone.Create(request.EditPhoneDto.OldNumber, request.EditPhoneDto.OldType);
+                    var newPhoneResult = Phone.Create(request.EditPhoneDto.NewNumber, request.EditPhoneDto.NewType);
 
-                    student.ChangePhone(oldPhone, newPhone);
+                    var result = Result.Combine(oldPhoneResult, newPhoneResult);
+                    if (result.IsFailure)
+                        return result;
+
+                    student.ChangePhone(oldPhoneResult.Value, newPhoneResult.Value);
 
                     await _studentRepository.UpdateAsync(student);
 
