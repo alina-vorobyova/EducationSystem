@@ -29,14 +29,14 @@ namespace EducationSystem.StudentManagement.Infrastructure
             if (!context.Student.Any())
             {
                 context.Student.Add(new Student(
-                    new FullName("Gleb", "Skripnikov", "Alexeevich"),
-                    new Passport("UA123123"),
+                    FullName.Create("Gleb", "Skripnikov", "Alexeevich").Value,
+                    Passport.Create("UA123123").Value,
                     PhotoUrl.Empty,
                     Email.Create("gspostmail@gmail.com").Value));
 
                 context.Student.Add(new Student(
-                    new FullName("Alina", "Skripnikova", "Andreyevna"),
-                    new Passport("AZ999888"),
+                    FullName.Create("Alina", "Skripnikova", "Andreyevna").Value,
+                    Passport.Create("AZ999888").Value,
                     PhotoUrl.Empty,
                     Email.Create("musemuse67@gmail.com").Value));
 
