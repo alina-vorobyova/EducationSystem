@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using EducationSystem.Common.Abstractions;
 using EducationSystem.Common.Contracts;
 using EducationSystem.Common.ValueObjects;
@@ -52,6 +53,11 @@ namespace EducationSystem.StudentManagement.Core
 
         public void AddPhone(Phone phone)
         {
+            var existedPhone = Phones.FirstOrDefault(x => x == phone);
+
+            if (existedPhone != null!)
+                throw new Exception("The provided phone already exists!");
+
             _phones.Add(phone);
         }
 
@@ -69,7 +75,7 @@ namespace EducationSystem.StudentManagement.Core
         {
             var index = _phones.FindIndex(x => x.Equals(phoneToReplace));
             if (index < 0)
-                throw new Exception("Phone to replace not found!");
+                throw new Exception("Phone to change not found!");
 
             _phones[index] = newPhone;
         }
@@ -107,7 +113,7 @@ namespace EducationSystem.StudentManagement.Core
         public void AssignToGroup(int groupId)
         {
             if (Status == StudentStatus.Exposed || Status == StudentStatus.Graduated)
-                throw new Exception("Can not assign to group not current student!");
+                throw new Exception("Can not assign to group exposed or graduated student!");
 
             if(groupId <= 0)
                 throw new Exception("GroupId can not be less or equal 0");
