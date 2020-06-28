@@ -24,5 +24,11 @@ namespace EducationSystem.Common.ApiUtils
             var regex = new Regex("^(?!^0+$)[a-zA-Z0-9]{3,20}$");
             return regex.IsMatch(passport);
         }
+
+        public static bool IsValidPhone(string phone)
+        {
+            var regex = new Regex(@"^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$");
+            return regex.IsMatch(phone);
+        }
     }
 }
