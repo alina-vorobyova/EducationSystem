@@ -9,7 +9,7 @@ namespace EducationSystem.Common.ApiUtils
     {
         public static bool IsValidUrl(string url)
         {
-            var regex = new Regex(@"[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)");
+            var regex = new Regex(@"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$");
             return regex.IsMatch(url);
         }
 
@@ -23,6 +23,12 @@ namespace EducationSystem.Common.ApiUtils
         {
             var regex = new Regex("^(?!^0+$)[a-zA-Z0-9]{3,20}$");
             return regex.IsMatch(passport);
+        }
+
+        public static bool IsValidPhone(string phone)
+        {
+            var regex = new Regex(@"^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$");
+            return regex.IsMatch(phone);
         }
     }
 }
